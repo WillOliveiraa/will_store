@@ -20,4 +20,18 @@ class ProductRepositoryDatabase implements ProductRepository {
       'images': product.images,
     });
   }
+
+  @override
+  Future<List<Product>> getProducts() async {
+    final connect = (_connection.connect() as FirebaseFirestore);
+    final productCollection = connect.collection('products');
+    final productsData = await productCollection.get();
+    final List<Product> products = [];
+    for (final item in productsData.docs) {
+      final product = Product(item.reference.id, item['name'],
+          item['description'], item['images'], item['size']);
+      products.add(product);
+    }
+    return products;
+  }
 }

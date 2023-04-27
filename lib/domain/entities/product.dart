@@ -24,4 +24,9 @@ class Product {
   get images => _images;
 
   get size => _size;
+
+  @override
+  String toString() {
+    return 'Product(_id: $_id, _name: $_name, _description: $_description, _images: $_images, _size: $_size)';
+  }
 }

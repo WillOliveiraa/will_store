@@ -1,6 +1,6 @@
 import 'package:will_store/application/repositories/product_repository.dart';
 
-import '../../../domain/entities/product.dart';
+import '../../domain/entities/product.dart';
 
 class SaveProduct {
   final ProductRepository _repository;

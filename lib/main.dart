@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'application/repositories/product_repository.dart';
-import 'application/repositories/usecases/save_product.dart';
+import 'application/usecases/save_product.dart';
 import 'domain/entities/product.dart';
 import 'infra/database/firebase_adapter.dart';
 import 'infra/repositories/product_repository_database.dart';
