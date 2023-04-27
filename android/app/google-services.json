@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "19017171149",
+    "firebase_url": "https://lambe-7c590.firebaseio.com",
+    "project_id": "lambe-7c590",
+    "storage_bucket": "lambe-7c590.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19017171149:android:cf9439a2cae33138262984",
+        "android_client_info": {
+          "package_name": "com.will.will_store"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19017171149-a78mcbua0ickmfj1mbfplq4b3mkuncl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO92f_F_dUMdYXsY3WhRt6E51WKtNBPSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19017171149-a78mcbua0ickmfj1mbfplq4b3mkuncl3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
