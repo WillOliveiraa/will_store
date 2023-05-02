@@ -27,7 +27,7 @@ class ProductModel extends Product {
       'name': name,
       'description': description,
       'images': images,
-      'itemSize': itemSize.map((x) => x.toMap()).toList(),
+      'itemSize': itemSize.map((x) => (x as ItemSizeModel).toMap()).toList(),
     };
   }
 

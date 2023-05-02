@@ -29,5 +29,5 @@ class ItemSize {
 
   get stock => _stock;
 
-  get dimentions => _dimentions;
+  Dimentions? get dimentions => _dimentions;
 }

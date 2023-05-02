@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:will_store/infra/database/connection.dart';
+import 'package:will_store/infra/models/item_size_model.dart';
 import 'package:will_store/infra/models/product_model.dart';
 
 import '../../application/repositories/product_repository.dart';
@@ -17,7 +18,8 @@ class ProductRepositoryDatabase implements ProductRepository {
     await productCollection.add({
       'name': product.name,
       'description': product.description,
-      // 'size': product.size,
+      'itemSize':
+          product.itemSize.map((x) => (x as ItemSizeModel).toMap()).toList(),
       'images': product.images,
     });
   }

@@ -30,7 +30,8 @@ void main() async {
       await collection.add({
         'name': item.name,
         'description': item.description,
-        'itemSize': item.itemSize.map((x) => x.toMap()).toList(),
+        'itemSize':
+            item.itemSize.map((x) => (x as ItemSizeModel).toMap()).toList(),
         'images': item.images,
       });
     }

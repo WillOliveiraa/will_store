@@ -22,15 +22,15 @@ class Product {
     }
   }
 
-  get id => _id;
+  String? get id => _id;
 
-  get name => _name;
+  String get name => _name;
 
-  get description => _description;
+  String get description => _description;
 
-  get images => _images;
+  List<String>? get images => _images;
 
-  get itemSize => _itemSize;
+  List<ItemSize> get itemSize => _itemSize;
 
   @override
   String toString() {

@@ -12,7 +12,8 @@ class ItemSizeModel extends ItemSize {
       'name': name,
       'price': price,
       'stock': stock,
-      'dimentions': dimentions?.toMap(),
+      'dimentions':
+          dimentions != null ? (dimentions as DimentionsModel).toMap() : null,
     };
   }
 

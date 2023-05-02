@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:will_store/application/repositories/product_repository.dart';
 import 'package:will_store/application/usecases/save_product.dart';
-import 'package:will_store/domain/entities/item_size.dart';
-import 'package:will_store/domain/entities/product.dart';
 import 'package:will_store/infra/database/fake_farebase_adapter.dart';
+import 'package:will_store/infra/models/dimentions_model.dart';
+import 'package:will_store/infra/models/item_size_model.dart';
+import 'package:will_store/infra/models/product_model.dart';
 import 'package:will_store/infra/repositories/product_repository_database.dart';
 
 void main() async {
@@ -17,12 +18,17 @@ void main() async {
   });
 
   test("Deve salvar um novo produto no banco de dados", () async {
-    final product = Product("1", "Product test 1", "Product muito bom", null,
-        [ItemSize("1", "P", 19.99, 5, null)]);
+    final product = ProductModel(
+        "1", "Product test 1", "Product muito bom", null, [
+      ItemSizeModel("1", "P", 19.99, 5, DimentionsModel("1", 15, 15, 20, 10))
+    ]);
     await saveProduct(product);
     final collection = connection.firestore.collection('products');
-    final productsData = await collection.get();
-    expect(productsData.size, equals(1));
-    expect(productsData.docs[0]['name'], equals('Product test 1'));
+    final productsCollection = await collection.get();
+    final productData = productsCollection.docs[0].data();
+    expect(productsCollection.size, equals(1));
+    expect(productData['name'], equals('Product test 1'));
+    expect(productData['itemSize'][0]['name'], equals('P'));
+    expect(productData['itemSize'][0]['dimentions']['width'], equals(15));
   });
 }
