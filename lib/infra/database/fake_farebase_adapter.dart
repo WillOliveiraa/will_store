@@ -10,9 +10,4 @@ class FakeFirebaseAdapter implements Connection {
   Object? connect() {
     return firestore;
   }
-
-  @override
-  void close() {
-    firestore.terminate();
-  }
 }

@@ -31,9 +31,4 @@ class Product {
   List<String>? get images => _images;
 
   List<ItemSize> get itemSize => _itemSize;
-
-  @override
-  String toString() {
-    return 'Product(_id: $_id, _name: $_name, _description: $_description, _images: $_images, _itemSize: $_itemSize)';
-  }
 }

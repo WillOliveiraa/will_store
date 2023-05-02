@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:will_store/infra/database/connection.dart';
-import 'package:will_store/infra/models/item_size_model.dart';
 import 'package:will_store/infra/models/product_model.dart';
 
 import '../../application/repositories/product_repository.dart';
@@ -15,13 +14,7 @@ class ProductRepositoryDatabase implements ProductRepository {
   Future<void> save(Product product) async {
     final connect = (_connection.connect() as FirebaseFirestore);
     final productCollection = connect.collection('products');
-    await productCollection.add({
-      'name': product.name,
-      'description': product.description,
-      'itemSize':
-          product.itemSize.map((x) => (x as ItemSizeModel).toMap()).toList(),
-      'images': product.images,
-    });
+    await productCollection.add((product as ProductModel).toMap());
   }
 
   @override

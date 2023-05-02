@@ -5,22 +5,6 @@ class ProductModel extends Product {
   ProductModel(
       super.id, super.name, super.description, super.images, super.itemSize);
 
-  Product copyWith({
-    String? id,
-    String? name,
-    String? description,
-    List<String>? images,
-    List<ItemSizeModel>? itemSize,
-  }) {
-    return Product(
-      id ?? this.id,
-      name ?? this.name,
-      description ?? this.description,
-      images ?? this.images,
-      itemSize ?? this.itemSize,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
@@ -32,17 +16,12 @@ class ProductModel extends Product {
   }
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
-    final itemSizes = List.from(map['itemSize'] ?? [])
-        .map((x) => ItemSizeModel.fromMap(x))
-        .toList();
     return ProductModel(
       map['id'] != null ? map['id'] as String : null,
       map['name'] as String,
       map['description'] as String,
-      map['images'] != null
-          ? List<String>.from((map['images'] as List<String>))
-          : null,
-      itemSizes,
+      map['images'] != null ? List<String>.from((map['images'])) : null,
+      List.from(map['itemSize']).map((x) => ItemSizeModel.fromMap(x)).toList(),
     );
   }
 }

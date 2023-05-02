@@ -8,9 +8,6 @@ class FirebaseAdapter implements Connection {
   FirebaseAdapter() : firestore = FirebaseFirestore.instance;
 
   @override
-  void close() {}
-
-  @override
   Object? connect() {
     return firestore;
   }

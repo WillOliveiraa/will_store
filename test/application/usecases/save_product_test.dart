@@ -19,9 +19,12 @@ void main() async {
 
   test("Deve salvar um novo produto no banco de dados", () async {
     final product = ProductModel(
-        "1", "Product test 1", "Product muito bom", null, [
-      ItemSizeModel("1", "P", 19.99, 5, DimentionsModel("1", 15, 15, 20, 10))
-    ]);
+      "1",
+      "Product test 1",
+      "Product muito bom",
+      ["https://github.com/WillOliveiraa.png"],
+      [ItemSizeModel("1", "P", 19.99, 5, DimentionsModel("1", 15, 15, 20, 10))],
+    );
     await saveProduct(product);
     final collection = connection.firestore.collection('products');
     final productsCollection = await collection.get();

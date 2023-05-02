@@ -22,7 +22,11 @@ void main() async {
       ProductModel("1", "Product test 1", "Product muito bom", null, [
         ItemSizeModel("1", "P", 19.99, 5, DimentionsModel("1", 15, 15, 20, 10))
       ]),
-      ProductModel("2", "Product test 2", "Product bom", null,
+      ProductModel(
+          "2",
+          "Product test 2",
+          "Product bom",
+          ["https://github.com/WillOliveiraa.png"],
           [ItemSizeModel("1", "G", 22.99, 10, null)])
     ];
     final collection = connection.firestore.collection('products');
