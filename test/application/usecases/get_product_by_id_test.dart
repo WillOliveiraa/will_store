@@ -4,7 +4,7 @@ import 'package:will_store/application/usecases/get_product_by_id.dart';
 import 'package:will_store/infra/database/fake_farebase_adapter.dart';
 import 'package:will_store/infra/repositories/product_repository_database.dart';
 
-import '../../products_mock.dart';
+import '../../mocks/products_mock.dart';
 
 void main() {
   final connection = FakeFirebaseAdapter();
@@ -18,8 +18,8 @@ void main() {
 
   test('Deve buscar um produto pelo id', () async {
     final collection = connection.firestore.collection('products');
-    final snapshot = await collection.add(products.first);
-    final productMock = products.first;
+    final snapshot = await collection.add(productsMock.first);
+    final productMock = productsMock.first;
     productMock['id'] = snapshot.id;
     final productId = snapshot.id;
     final output = await getProductById(productId);

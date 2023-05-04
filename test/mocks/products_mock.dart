@@ -1,4 +1,4 @@
-final products = [
+final productsMock = [
   {
     "id": "1",
     'name': "Product test 1",
@@ -23,7 +23,7 @@ final products = [
           "id": "1",
           "width": 15,
           "height": 15,
-          "lenght": 20,
+          "length": 20,
           "weight": 10,
         }
       }

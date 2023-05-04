@@ -23,7 +23,7 @@ class ProductRepositoryDatabase implements ProductRepository {
     final productsData = await productCollection.get();
     final List<Product> products = [];
     for (final item in productsData.docs) {
-      final product = ProductModel.fromMap(item.data());
+      final product = ProductModel.fromMap(_setId(item));
       products.add(product);
     }
     return products;
