@@ -12,8 +12,7 @@ class ItemSizeModel extends ItemSize {
       'name': name,
       'price': price,
       'stock': stock,
-      'dimentions':
-          dimentions != null ? (dimentions as DimentionsModel).toMap() : null,
+      'dimentions': (dimentions as DimentionsModel).toMap(),
     };
   }
 
@@ -23,9 +22,7 @@ class ItemSizeModel extends ItemSize {
       map['name'] as String,
       map['price'] as num,
       map['stock'] as int,
-      map['dimentions'] != null
-          ? DimentionsModel.fromMap(map['dimentions'] as Map<String, dynamic>)
-          : null,
+      DimentionsModel.fromMap(map['dimentions'] as Map<String, dynamic>),
     );
   }
 }

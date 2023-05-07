@@ -30,6 +30,6 @@ void main() async {
     expect(products.first.id, equals(productsSnap.first['id']));
     expect(products.first.name, equals('Product test 1'));
     expect(products.first.itemSize.first.name, equals('P'));
-    expect(products[1].itemSize[1].dimentions?.width, equals(15));
+    expect(products[1].itemSize[1].dimentions.width, equals(15));
   });
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'application/repositories/product_repository.dart';
 import 'application/usecases/save_product.dart';
+import 'domain/entities/dimentions.dart';
 import 'domain/entities/item_size.dart';
 import 'domain/entities/product.dart';
 import 'infra/database/firebase_adapter.dart';
@@ -15,7 +16,7 @@ void main() async {
   ProductRepository repository = ProductRepositoryDatabase(connection);
   SaveProduct saveProduct = SaveProduct(repository);
   final product = Product("1", "Product test 1", "Product muito bom", null,
-      [ItemSize("1", "P", 19.99, 5, null)]);
+      [ItemSize("1", "P", 19.99, 5, Dimentions("1", 100, 30, 10, 3))]);
   await saveProduct(product);
   runApp(const MyApp());
 }

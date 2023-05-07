@@ -34,8 +34,8 @@ class Product {
 
   num getVolume() {
     final dimentions = _itemSize.first.dimentions;
-    return (dimentions?.width / 100) *
-        (dimentions?.height / 100) *
-        (dimentions?.length / 100);
+    return (dimentions.width / 100) *
+        (dimentions.height / 100) *
+        (dimentions.length / 100);
   }
 }
