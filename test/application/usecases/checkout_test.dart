@@ -96,6 +96,20 @@ void main() async {
             .having((error) => error.message, "message", "Product not found")));
   });
 
+  test("Não deve criar um pedido com produto duplicado", () {
+    final Map<String, dynamic> input = {
+      "cpf": "407.302.170-27",
+      "items": [
+        {"idProduct": productsSnap[0]['id'], "quantity": 1},
+        {"idProduct": productsSnap[0]['id'], "quantity": 1},
+      ],
+    };
+    expect(
+        () async => await checkout(input),
+        throwsA(isA<ArgumentError>()
+            .having((error) => error.message, "message", "Duplicated item")));
+  });
+
   test("Deve criar um pedido com 3 produtos", () async {
     final Map<String, dynamic> input = {
       "cpf": "407.302.170-27",
@@ -107,5 +121,19 @@ void main() async {
     };
     final output = await checkout(input);
     expect(output['total'], equals(5330));
+  });
+
+  test("Deve criar um pedido com 1 produto calculando o frete", () async {
+    final Map<String, dynamic> input = {
+      "cpf": "407.302.170-27",
+      "items": [
+        {"idProduct": productsSnap[0]['id'], "quantity": 3},
+      ],
+      "from": "22060030",
+      "to": "88015600",
+    };
+    final output = await checkout(input);
+    expect(output['freight'], equals(90));
+    expect(output['total'], equals(390));
   });
 }

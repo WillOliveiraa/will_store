@@ -1,4 +1,5 @@
 import 'package:will_store/application/repositories/product_repository.dart';
+import 'package:will_store/domain/entities/freight_calculate.dart';
 
 import '../../domain/entities/order.dart';
 
@@ -13,14 +14,20 @@ class Checkout {
     if (!input.containsKey('items') || (input['items'] as List).isEmpty) {
       throw ArgumentError("Invalid items");
     }
+    num freight = 0;
     for (final Map<String, dynamic> item in input['items']) {
       if (!item.containsKey('quantity') || item['quantity'] <= 0) {
         throw ArgumentError("Invalid quantity");
       }
       final product = await repository.getProductById(item['idProduct']);
       order.addItem(product, item['quantity']);
+      final itemFreight = FreightCalculate.calculate(product, item['quantity']);
+      freight += itemFreight;
+    }
+    if (input.containsKey('from') && input.containsKey('to')) {
+      order.freight = freight;
     }
     final num total = order.getTotal();
-    return {"total": total};
+    return {"total": total, "freight": freight};
   }
 }

@@ -31,4 +31,11 @@ class Product {
   List<String>? get images => _images;
 
   List<ItemSize> get itemSize => _itemSize;
+
+  num getVolume() {
+    final dimentions = _itemSize.first.dimentions;
+    return (dimentions?.width / 100) *
+        (dimentions?.height / 100) *
+        (dimentions?.length / 100);
+  }
 }
