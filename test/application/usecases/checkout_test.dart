@@ -1,30 +1,43 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:parameterized_test/parameterized_test.dart';
+import 'package:will_store/application/repositories/coupon_repository.dart';
 import 'package:will_store/application/repositories/product_repository.dart';
 import 'package:will_store/application/usecases/checkout.dart';
 import 'package:will_store/infra/database/fake_farebase_adapter.dart';
+import 'package:will_store/infra/repositories/coupon_repository_database.dart';
 import 'package:will_store/infra/repositories/product_repository_database.dart';
 
+import '../../mocks/coupons_mock.dart';
 import '../../mocks/products_mock.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
-  late ProductRepository repository;
+  late ProductRepository productRepository;
+  late CouponRepository couponRepository;
   late Checkout checkout;
   final List<Map<String, dynamic>> productsSnap = [];
+  final List<Map<String, dynamic>> couponsSnap = [];
+  final collection = connection.firestore.collection('products');
 
   setUp(() {
-    repository = ProductRepositoryDatabase(connection);
-    checkout = Checkout(repository);
+    productRepository = ProductRepositoryDatabase(connection);
+    couponRepository = CouponRepositoryDatabase(connection);
+    checkout = Checkout(productRepository, couponRepository);
   });
 
   setUpAll(() async {
-    final collection = connection.firestore.collection('products');
     for (int i = 0; i < productsMock.length; i++) {
       final snapshot = await collection.add(productsMock[i]);
       final productMock = productsMock[i];
       productMock['id'] = snapshot.id;
       productsSnap.add(productMock);
+    }
+    final couponCollection = connection.firestore.collection('coupons');
+    for (int i = 0; i < couponsMock.length; i++) {
+      final snapshot = await couponCollection.add(couponsMock[i]);
+      final couponMock = couponsMock[i];
+      couponMock['id'] = snapshot.id;
+      couponsSnap.add(couponMock);
     }
   });
 
@@ -123,6 +136,50 @@ void main() async {
     expect(output['total'], equals(5330));
   });
 
+  test("Deve criar um pedido com 3 produtos e com cupom de desconto", () async {
+    final Map<String, dynamic> input = {
+      "cpf": "407.302.170-27",
+      "items": [
+        {"idProduct": productsSnap[0]['id'], "quantity": 1},
+        {"idProduct": productsSnap[1]['id'], "quantity": 1},
+        {"idProduct": productsSnap[2]['id'], "quantity": 3},
+      ],
+      "coupon": "VALE20",
+    };
+    final output = await checkout(input);
+    expect(output['total'], equals(4152));
+  });
+
+  test("Não deve criar um pedido com o cupom de desconto não encontrado",
+      () async {
+    final Map<String, dynamic> input = {
+      "cpf": "407.302.170-27",
+      "items": [
+        {"idProduct": productsSnap[0]['id'], "quantity": 1},
+      ],
+      "coupon": "VALE90",
+    };
+    expect(
+        () async => await checkout(input),
+        throwsA(isA<ArgumentError>()
+            .having((error) => error.message, "message", "Coupon not found")));
+  });
+
+  test("Deve criar um pedido com 3 produtos e com cupom de desconto expirado",
+      () async {
+    final Map<String, dynamic> input = {
+      "cpf": "407.302.170-27",
+      "items": [
+        {"idProduct": productsSnap[0]['id'], "quantity": 3},
+        {"idProduct": productsSnap[1]['id'], "quantity": 1},
+        {"idProduct": productsSnap[2]['id'], "quantity": 1},
+      ],
+      "coupon": "VALE10",
+    };
+    final output = await checkout(input);
+    expect(output['total'], equals(5330));
+  });
+
   test("Deve criar um pedido com 1 produto calculando o frete", () async {
     final Map<String, dynamic> input = {
       "cpf": "407.302.170-27",
@@ -135,5 +192,24 @@ void main() async {
     final output = await checkout(input);
     expect(output['freight'], equals(90));
     expect(output['total'], equals(390));
+  });
+
+  test("Não deve criar um pedido se o produto estiver com dimensão inválida",
+      () async {
+    final productMock = productsSnap[0];
+    productMock['itemSize'][0]['dimentions']['width'] = -1;
+    final snapshot = await collection.add(productMock);
+    productMock['id'] = snapshot.id;
+    productsSnap.add(productMock);
+    final Map<String, dynamic> input = {
+      "cpf": "407.302.170-27",
+      "items": [
+        {"idProduct": productsSnap.last['id'], "quantity": 1},
+      ],
+    };
+    expect(
+        () async => await checkout(input),
+        throwsA(isA<ArgumentError>()
+            .having((error) => error.message, "message", "Invalid width")));
   });
 }

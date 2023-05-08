@@ -1,3 +1,4 @@
+import 'package:will_store/domain/entities/coupon.dart';
 import 'package:will_store/domain/entities/product.dart';
 
 import 'cpf.dart';
@@ -9,6 +10,7 @@ class Order {
   late final List<OrderItem> items;
   final int sequence;
   final DateTime date;
+  Coupon? _coupon;
   // ignore: prefer_final_fields
   num _freight;
 
@@ -34,9 +36,16 @@ class Order {
     for (final item in items) {
       total += item.price * item.quantity;
     }
+    if (_coupon != null) {
+      total -= _coupon!.calculateDiscount(total);
+    }
     total += _freight;
     return total;
   }
 
   set freight(num value) => _freight = value;
+
+  void addCoupon(Coupon coupon) {
+    if (!coupon.isExpired(date)) _coupon = coupon;
+  }
 }
