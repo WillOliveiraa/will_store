@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:parameterized_test/parameterized_test.dart';
-import 'package:will_store/domain/entities/item_order.dart';
+import 'package:will_store/domain/entities/order_item.dart';
 
 void main() {
   test('Deve criar um item do pedido', () {

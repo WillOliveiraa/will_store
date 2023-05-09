@@ -7,19 +7,19 @@ import '../../domain/entities/product.dart';
 
 class ProductRepositoryDatabase implements ProductRepository {
   final Connection _connection;
-  final productsCollection = 'products';
+  final _productsCollection = 'products';
 
   ProductRepositoryDatabase(this._connection);
 
   @override
   Future<void> save(Product product) async {
-    final productCollection = _connect.collection(productsCollection);
+    final productCollection = _connect.collection(_productsCollection);
     await productCollection.add((product as ProductModel).toMap());
   }
 
   @override
   Future<List<Product>> getProducts() async {
-    final productCollection = _connect.collection(productsCollection);
+    final productCollection = _connect.collection(_productsCollection);
     final productsData = await productCollection.get();
     final List<Product> products = [];
     for (final item in productsData.docs) {
@@ -40,7 +40,7 @@ class ProductRepositoryDatabase implements ProductRepository {
       (_connection.connect() as FirebaseFirestore);
 
   DocumentReference _getFirestoreRef(String id) {
-    return _connect.doc('$productsCollection/$id');
+    return _connect.doc('$_productsCollection/$id');
   }
 
   Map<String, dynamic> _setId(DocumentSnapshot<Object?> productData) {
