@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:will_store/catalog/application/repositories/product_repository.dart';
+import 'package:will_store/catalog/application/usecases/save_product.dart';
+import 'package:will_store/catalog/domain/entities/dimentions.dart';
+import 'package:will_store/catalog/domain/entities/item_size.dart';
+import 'package:will_store/catalog/domain/entities/product.dart';
+import 'package:will_store/catalog/infra/repositories/product_repository_database.dart';
 
-import 'application/repositories/product_repository.dart';
-import 'application/usecases/save_product.dart';
-import 'domain/entities/dimentions.dart';
-import 'domain/entities/item_size.dart';
-import 'domain/entities/product.dart';
-import 'infra/database/firebase_adapter.dart';
-import 'infra/repositories/product_repository_database.dart';
+import 'core/database/firebase_adapter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
