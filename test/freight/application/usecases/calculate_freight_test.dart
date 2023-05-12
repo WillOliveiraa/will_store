@@ -1,27 +1,44 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
 import 'package:will_store/freight/application/models/calculate_freight_input.dart';
 import 'package:will_store/freight/application/models/calculate_freight_item.dart';
-import 'package:will_store/freight/application/repositories/zip_code_repository.dart';
 import 'package:will_store/freight/application/usecases/calculate_freight.dart';
 import 'package:will_store/freight/domain/entities/zip_code.dart';
+import 'package:will_store/freight/infra/models/city_model.dart';
+import 'package:will_store/freight/infra/models/uf_model.dart';
+import 'package:will_store/freight/infra/models/zip_code_model.dart';
 
-class ImplementsRepository implements ZipCodeRepository {
+class ImplementsRepository implements ZipCodeGateway {
   @override
   Future<ZipCode?> getZipCode(String code) async {
     if (code == "22060030") {
-      return ZipCode(
-          "22060030", "Rua Aires Saldanha", "Copacabana", -27.5945, -48.5477);
+      return ZipCodeModel(
+        "22060030",
+        "Rua Aires Saldanha",
+        "Copacabana",
+        CityModel(1, "asd", "Rio de Janeiro"),
+        UfModel("Rio de Janeiro", "RJ"),
+        -27.5945,
+        -48.5477,
+      );
     }
     if (code == "88015600") {
       return ZipCode(
-          "88015600", "Rua Aires Saldanha", "Copacabana", -22.9129, -43.2003);
+        "88015600",
+        "Rua Almirante Lamego",
+        "Centro",
+        CityModel(1, "asd", "Florianópolis"),
+        UfModel("Santa Catarina", "SC"),
+        -22.9129,
+        -43.2003,
+      );
     }
     return null;
   }
 }
 
 void main() {
-  late ZipCodeRepository repository;
+  late ZipCodeGateway repository;
   late CalculateFreight calculateFreight;
 
   setUpAll(() {

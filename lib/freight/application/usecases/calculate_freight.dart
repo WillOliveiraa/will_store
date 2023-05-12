@@ -1,20 +1,20 @@
-import 'package:will_store/freight/application/repositories/zip_code_repository.dart';
+import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
 import 'package:will_store/freight/domain/entities/freight_calculate.dart';
 
 import '../../domain/entities/distance_calculator.dart';
 import '../models/calculate_freight_input.dart';
 
 class CalculateFreight {
-  final ZipCodeRepository _repository;
+  final ZipCodeGateway _gateway;
 
-  CalculateFreight(this._repository);
+  CalculateFreight(this._gateway);
 
   Future<Map<String, dynamic>> call(CalculateFreightInput input) async {
     final Map<String, dynamic> output = {"freight": 0};
     num distance = 1000;
     if (input.from != null && input.to != null) {
-      final from = await _repository.getZipCode(input.from!);
-      final to = await _repository.getZipCode(input.to!);
+      final from = await _gateway.getZipCode(input.from!);
+      final to = await _gateway.getZipCode(input.to!);
       if (from != null && to != null) {
         distance = DistanceCalculator.calculate(from.coord, to.coord);
       }

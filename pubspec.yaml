@@ -16,7 +16,7 @@ dependencies:
   string_validator: ^1.0.0
   cloud_firestore: ^4.5.2
   firebase_core: ^2.10.0
-  fake_cloud_firestore: ^2.4.1+1
+  dio: ^5.1.2
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +24,7 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   parameterized_test: ^1.0.0
+  fake_cloud_firestore: ^2.4.1+1
 
 flutter:
   uses-material-design: true

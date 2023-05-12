@@ -35,4 +35,14 @@ void main() {
     expect(dimentions.id, equals("1"));
     expect(dimentions.width, equals(10));
   });
+
+  test('Deve pegar o volume do produto', () {
+    final dimentions = Dimentions("1", 10, 20, 15, 100);
+    expect(dimentions.getVolume(), equals(0.0030000000000000005));
+  });
+
+  test('Deve pegar a densidade do produto', () {
+    final dimentions = Dimentions("1", 10, 20, 15, 100);
+    expect(dimentions.getDensity(), equals(0.000030000000000000004));
+  });
 }

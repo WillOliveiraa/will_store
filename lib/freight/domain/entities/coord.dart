@@ -1,6 +1,6 @@
 class Coord {
-  final num lat;
-  final num long;
+  final double lat;
+  final double long;
 
   Coord(this.lat, this.long);
 }
