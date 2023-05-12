@@ -21,7 +21,12 @@ class OrderRepositoryDatabase implements OrderRepository {
   @override
   Future<void> save(Order order) async {
     final orderCollection = _connect.collection(_ordersCollection);
-    await orderCollection.add((order as OrderModel).toMap());
+    await orderCollection.add((OrderModel(
+            cpf: order.cpf.value,
+            id: order.id,
+            sequence: order.sequence,
+            date: order.date))
+        .toMap());
   }
 
   @override

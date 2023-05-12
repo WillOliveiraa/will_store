@@ -15,6 +15,7 @@ class OrderModel extends Order {
           .toList(),
       'sequence': sequence,
       'date': date.millisecondsSinceEpoch,
+      'code': code,
     };
   }
 

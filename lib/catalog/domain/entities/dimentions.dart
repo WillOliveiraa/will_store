@@ -11,4 +11,12 @@ class Dimentions {
     if (length.isNegative) throw ArgumentError("Invalid length");
     if (weight.isNegative) throw ArgumentError("Invalid weight");
   }
+
+  num getVolume() {
+    return (width / 100) * (height / 100) * (length / 100);
+  }
+
+  num getDensity() {
+    return getVolume() / weight;
+  }
 }

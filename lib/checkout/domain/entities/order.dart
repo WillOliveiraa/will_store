@@ -17,7 +17,7 @@ class Order {
 
   Order({
     this.id,
-    required cpf,
+    required String cpf,
     this.sequence = 1,
     DateTime? date,
   })  : cpf = Cpf(cpf),

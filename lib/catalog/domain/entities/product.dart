@@ -21,11 +21,4 @@ class Product {
       throw ArgumentError("Invalid description");
     }
   }
-
-  num getVolume() {
-    final dimentions = itemSize.first.dimentions;
-    return (dimentions.width / 100) *
-        (dimentions.height / 100) *
-        (dimentions.length / 100);
-  }
 }
