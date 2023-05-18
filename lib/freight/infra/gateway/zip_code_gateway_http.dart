@@ -15,7 +15,8 @@ class ZipCodeGatewayHttp implements ZipCodeGateway {
     final cleanCep = code.replaceAll('.', '').replaceAll('-', '');
     final url = '$urlCepAberto$cleanCep';
     final response = await _httpClient.get(url);
-    final zipCode = ZipCodeModel.fromMap(response as Map<String, dynamic>);
+    if (response.isEmpty) throw ArgumentError("CEP not found");
+    final zipCode = ZipCodeModel.fromMap(response);
     return zipCode;
   }
 }

@@ -1,4 +1,4 @@
 abstract class HttpClient {
-  Future<Object> get(String url);
-  Future<Object> post(String url, dynamic body);
+  Future<Map<String, dynamic>> get(String url);
+  Future<Map<String, dynamic>> post(String url, dynamic body);
 }

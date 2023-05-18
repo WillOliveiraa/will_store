@@ -25,8 +25,8 @@ class ZipCodeModel extends ZipCode {
       map['bairro'] as String,
       CityModel.fromMap(map['cidade'] as Map<String, dynamic>),
       UfModel.fromMap(map['estado'] as Map<String, dynamic>),
-      double.tryParse(map['latitude'])!,
-      double.tryParse(map['longitude'])!,
+      double.tryParse(map['latitude'].toString())!,
+      double.tryParse(map['longitude'].toString())!,
     );
   }
 }

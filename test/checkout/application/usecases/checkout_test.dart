@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart' as http_mocka_dapter;
 import 'package:parameterized_test/parameterized_test.dart';
 import 'package:will_store/catalog/application/repositories/product_repository.dart';
 import 'package:will_store/catalog/infra/repositories/product_repository_database.dart';
@@ -8,28 +10,42 @@ import 'package:will_store/checkout/application/usecases/checkout.dart';
 import 'package:will_store/checkout/infra/repositories/coupon_repository_database.dart';
 import 'package:will_store/checkout/infra/repositories/order_repository_database.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
+import 'package:will_store/core/utils/constant.dart';
+import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
+import 'package:will_store/freight/infra/gateway/zip_code_gateway_http.dart';
+import 'package:will_store/freight/infra/http/dio_adapter.dart';
 
+import '../../../mocks/cep_aberto.dart';
 import '../../../mocks/coupons_mock.dart';
 import '../../../mocks/orders_mock.dart';
 import '../../../mocks/products_mock.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
+  final dio = Dio(BaseOptions(baseUrl: urlCepAberto));
+  final httpDioMockAdapter = http_mocka_dapter.DioAdapter(dio: dio);
+  dio.httpClientAdapter = httpDioMockAdapter;
+  final httpClient = DioAdapter(dio: dio);
   late ProductRepository productRepository;
   late CouponRepository couponRepository;
   late OrderRepository orderRepository;
+  late ZipCodeGateway zipCodeGateway;
   late Checkout checkout;
   final List<Map<String, dynamic>> productsSnap = [];
   final List<Map<String, dynamic>> couponsSnap = [];
   final List<Map<String, dynamic>> ordersSnap = [];
   final collection = connection.firestore.collection('products');
   final orderCollection = connection.firestore.collection('orders');
+  const endpoint = 'https://www.cepaberto.com/api/v3/cep?cep=';
+  final headers = <String, dynamic>{'authorization': tokenCepStr};
 
   setUp(() {
     productRepository = ProductRepositoryDatabase(connection);
     couponRepository = CouponRepositoryDatabase(connection);
     orderRepository = OrderRepositoryDatabase(connection);
-    checkout = Checkout(productRepository, couponRepository, orderRepository);
+    zipCodeGateway = ZipCodeGatewayHttp(httpClient);
+    checkout = Checkout(
+        productRepository, couponRepository, orderRepository, zipCodeGateway);
   });
 
   setUpAll(() async {
@@ -52,6 +68,12 @@ void main() async {
       orderMock['id'] = snapshot.id;
       ordersSnap.add(orderMock);
     }
+    httpDioMockAdapter.onGet(
+        "${endpoint}22060030", (request) => request.reply(200, cepsAberto[0]),
+        headers: headers);
+    httpDioMockAdapter.onGet(
+        "${endpoint}88015600", (request) => request.reply(200, cepsAberto[1]),
+        headers: headers);
   });
 
   parameterizedTest(
@@ -203,8 +225,8 @@ void main() async {
       "to": "88015600",
     };
     final output = await checkout(input);
-    expect(output['freight'], equals(90));
-    expect(output['total'], equals(390));
+    expect(output['freight'], equals(66.98));
+    expect(output['total'], equals(366.98));
   });
 
   test("Deve criar um pedido com 1 produto calculando o frete com valor mínimo",
@@ -212,14 +234,14 @@ void main() async {
     final Map<String, dynamic> input = {
       "cpf": "407.302.170-27",
       "items": [
-        {"idProduct": productsSnap[0]['id'], "quantity": 1},
+        {"idProduct": productsSnap[2]['id'], "quantity": 1},
       ],
       "from": "22060030",
       "to": "88015600",
     };
     final output = await checkout(input);
     expect(output['freight'], equals(10));
-    expect(output['total'], equals(110));
+    expect(output['total'], equals(40));
   });
 
   test("Deve criar um pedido e verificar o código de série", () async {
@@ -233,7 +255,7 @@ void main() async {
     final ordersData = await orderCollection.get();
     final orderData = ordersData.docs.last.data();
     expect(output['total'], equals(100));
-    expect(orderData['code'], equals("202300000002"));
+    expect(orderData['code'], equals("202300000008"));
   });
 
   test("Não deve criar um pedido se o produto estiver com dimensão inválida",

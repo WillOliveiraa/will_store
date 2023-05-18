@@ -14,7 +14,7 @@ class CityModel extends City {
   factory CityModel.fromMap(Map<String, dynamic> map) {
     return CityModel(
       map['ddd'] as int,
-      map['ibge'] as String,
+      map['ibge'] as int,
       map['nome'] as String,
     );
   }
