@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:will_store/checkout/application/repositories/order_repository.dart';
+import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/usecases/get_order_sequence.dart';
-import 'package:will_store/checkout/infra/repositories/order_repository_database.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
 
 import '../../../mocks/orders_mock.dart';
@@ -9,12 +9,12 @@ import '../../../mocks/orders_mock.dart';
 void main() {
   final connection = FakeFirebaseAdapter();
   late GetOrderSequence getOrderSequence;
-  late OrderRepository repository;
+  late RepositoryFactory repositoryFactory;
   final List<Map<String, dynamic>> ordersSnap = [];
 
   setUp(() {
-    repository = OrderRepositoryDatabase(connection);
-    getOrderSequence = GetOrderSequence(repository);
+    repositoryFactory = DatabaseRepositoryFactory(connection);
+    getOrderSequence = GetOrderSequence(repositoryFactory);
   });
 
   setUpAll(() async {

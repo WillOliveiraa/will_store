@@ -1,7 +1,7 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
-import 'package:will_store/core/database/connection.dart';
+import 'package:will_store/core/database/database_connection.dart';
 
-class FakeFirebaseAdapter implements Connection {
+class FakeFirebaseAdapter implements DatabaseConnection {
   FakeFirebaseFirestore firestore;
 
   FakeFirebaseAdapter() : firestore = FakeFirebaseFirestore();

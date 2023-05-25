@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:will_store/core/database/connection.dart';
+import 'package:will_store/core/database/database_connection.dart';
 
 import '../../application/repositories/coupon_repository.dart';
 import '../../domain/entities/coupon.dart';
 import '../models/coupon_model.dart';
 
 class CouponRepositoryDatabase implements CouponRepository {
-  final Connection _connection;
+  final DatabaseConnection _connection;
   final couponsCollection = "coupons";
 
   CouponRepositoryDatabase(this._connection);

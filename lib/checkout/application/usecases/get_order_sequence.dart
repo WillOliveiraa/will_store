@@ -1,11 +1,14 @@
+import '../factories/repository_factory.dart';
 import '../repositories/order_repository.dart';
 
 class GetOrderSequence {
-  final OrderRepository repository;
+  late OrderRepository _orderRepository;
 
-  GetOrderSequence(this.repository);
+  GetOrderSequence(RepositoryFactory repositoryFactory) {
+    _orderRepository = repositoryFactory.createOrderRepository();
+  }
 
   Future<int> call() async {
-    return await repository.count();
+    return await _orderRepository.count();
   }
 }

@@ -1,19 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:will_store/catalog/application/repositories/product_repository.dart';
 import 'package:will_store/catalog/application/usecases/get_products.dart';
-import 'package:will_store/catalog/infra/repositories/product_repository_database.dart';
+import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
 
 import '../../../mocks/products_mock.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
-  late ProductRepository repository;
+  late RepositoryFactory repositoryFactory;
   late GetProducts getProducts;
 
   setUp(() {
-    repository = ProductRepositoryDatabase(connection);
-    getProducts = GetProducts(repository);
+    repositoryFactory = DatabaseRepositoryFactory(connection);
+    getProducts = GetProducts(repositoryFactory);
   });
 
   test("Deve listar todos os produtos salvos", () async {

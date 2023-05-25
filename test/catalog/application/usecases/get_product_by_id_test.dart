@@ -1,19 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:will_store/catalog/application/repositories/product_repository.dart';
 import 'package:will_store/catalog/application/usecases/get_product_by_id.dart';
-import 'package:will_store/catalog/infra/repositories/product_repository_database.dart';
+import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
 
 import '../../../mocks/products_mock.dart';
 
 void main() {
   final connection = FakeFirebaseAdapter();
+  late RepositoryFactory repositoryFactory;
   late GetProductById getProductById;
-  late ProductRepository repository;
 
   setUp(() {
-    repository = ProductRepositoryDatabase(connection);
-    getProductById = GetProductById(repository);
+    repositoryFactory = DatabaseRepositoryFactory(connection);
+    getProductById = GetProductById(repositoryFactory);
   });
 
   test('Deve buscar um produto pelo id', () async {

@@ -1,20 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:will_store/checkout/application/repositories/coupon_repository.dart';
+import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/usecases/validate_coupon.dart';
-import 'package:will_store/checkout/infra/repositories/coupon_repository_database.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
 
 import '../../../mocks/coupons_mock.dart';
 
 void main() {
   final connection = FakeFirebaseAdapter();
-  late CouponRepository repository;
+  late RepositoryFactory repositoryFactory;
   late ValidateCoupon validateCoupon;
   final List<Map<String, dynamic>> couponsSnap = [];
 
   setUp(() {
-    repository = CouponRepositoryDatabase(connection);
-    validateCoupon = ValidateCoupon(repository);
+    repositoryFactory = DatabaseRepositoryFactory(connection);
+    validateCoupon = ValidateCoupon(repositoryFactory);
   });
 
   setUp(() async {

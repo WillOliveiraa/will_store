@@ -1,12 +1,15 @@
 import '../../domain/entities/order.dart';
+import '../factories/repository_factory.dart';
 import '../repositories/order_repository.dart';
 
 class SaveOrder {
-  final OrderRepository _repository;
+  late OrderRepository _orderRepository;
 
-  SaveOrder(this._repository);
+  SaveOrder(RepositoryFactory repositoryFactory) {
+    _orderRepository = repositoryFactory.createOrderRepository();
+  }
 
   Future<void> call(Order order) async {
-    await _repository.save(order);
+    await _orderRepository.save(order);
   }
 }

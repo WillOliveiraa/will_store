@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firebase;
-import 'package:will_store/core/database/connection.dart';
+import 'package:will_store/core/database/database_connection.dart';
 
 import '../../application/repositories/order_repository.dart';
 import '../../domain/entities/order.dart';
 import '../models/order_model.dart';
 
 class OrderRepositoryDatabase implements OrderRepository {
-  final Connection _connection;
+  final DatabaseConnection _connection;
   final _ordersCollection = "orders";
 
   OrderRepositoryDatabase(this._connection);

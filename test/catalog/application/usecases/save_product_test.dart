@@ -1,20 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:will_store/catalog/application/repositories/product_repository.dart';
 import 'package:will_store/catalog/application/usecases/save_product.dart';
 import 'package:will_store/catalog/infra/models/dimentions_model.dart';
 import 'package:will_store/catalog/infra/models/item_size_model.dart';
 import 'package:will_store/catalog/infra/models/product_model.dart';
-import 'package:will_store/catalog/infra/repositories/product_repository_database.dart';
+import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
-  late ProductRepository repository;
+  late RepositoryFactory repositoryFactory;
   late SaveProduct saveProduct;
 
   setUp(() {
-    repository = ProductRepositoryDatabase(connection);
-    saveProduct = SaveProduct(repository);
+    repositoryFactory = DatabaseRepositoryFactory(connection);
+    saveProduct = SaveProduct(repositoryFactory);
   });
 
   test("Deve salvar um novo produto no banco de dados", () async {

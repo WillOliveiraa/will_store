@@ -1,21 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:will_store/catalog/infra/models/product_model.dart';
-import 'package:will_store/checkout/application/repositories/order_repository.dart';
+import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/usecases/save_order.dart';
 import 'package:will_store/checkout/infra/models/order_model.dart';
-import 'package:will_store/checkout/infra/repositories/order_repository_database.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
 
 import '../../../mocks/products_mock.dart';
 
 void main() {
   final connection = FakeFirebaseAdapter();
-  late OrderRepository repository;
+  late RepositoryFactory repositoryFactory;
   late SaveOrder saveOrder;
 
   setUp(() {
-    repository = OrderRepositoryDatabase(connection);
-    saveOrder = SaveOrder(repository);
+    repositoryFactory = DatabaseRepositoryFactory(connection);
+    saveOrder = SaveOrder(repositoryFactory);
   });
 
   test('Deve salvar uma nova ordem', () async {

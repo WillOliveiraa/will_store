@@ -2,13 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart' as http_mocka_dapter;
 import 'package:parameterized_test/parameterized_test.dart';
-import 'package:will_store/catalog/application/repositories/product_repository.dart';
-import 'package:will_store/catalog/infra/repositories/product_repository_database.dart';
-import 'package:will_store/checkout/application/repositories/coupon_repository.dart';
-import 'package:will_store/checkout/application/repositories/order_repository.dart';
+import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/usecases/checkout.dart';
-import 'package:will_store/checkout/infra/repositories/coupon_repository_database.dart';
-import 'package:will_store/checkout/infra/repositories/order_repository_database.dart';
 import 'package:will_store/core/database/fake_farebase_adapter.dart';
 import 'package:will_store/core/utils/constant.dart';
 import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
@@ -26,9 +22,7 @@ void main() async {
   final httpDioMockAdapter = http_mocka_dapter.DioAdapter(dio: dio);
   dio.httpClientAdapter = httpDioMockAdapter;
   final httpClient = DioAdapter(dio: dio);
-  late ProductRepository productRepository;
-  late CouponRepository couponRepository;
-  late OrderRepository orderRepository;
+  late RepositoryFactory repositoryFactory;
   late ZipCodeGateway zipCodeGateway;
   late Checkout checkout;
   final List<Map<String, dynamic>> productsSnap = [];
@@ -40,12 +34,9 @@ void main() async {
   final headers = <String, dynamic>{'authorization': tokenCepStr};
 
   setUp(() {
-    productRepository = ProductRepositoryDatabase(connection);
-    couponRepository = CouponRepositoryDatabase(connection);
-    orderRepository = OrderRepositoryDatabase(connection);
+    repositoryFactory = DatabaseRepositoryFactory(connection);
     zipCodeGateway = ZipCodeGatewayHttp(httpClient);
-    checkout = Checkout(
-        productRepository, couponRepository, orderRepository, zipCodeGateway);
+    checkout = Checkout(repositoryFactory, zipCodeGateway);
   });
 
   setUpAll(() async {

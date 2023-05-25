@@ -1,4 +1,5 @@
 import 'package:will_store/catalog/application/repositories/product_repository.dart';
+import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/repositories/order_repository.dart';
 import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
 import 'package:will_store/freight/application/models/calculate_freight_input.dart';
@@ -9,13 +10,17 @@ import '../../domain/entities/order.dart';
 import '../repositories/coupon_repository.dart';
 
 class Checkout {
-  final ProductRepository _productRepository;
-  final CouponRepository _couponRepository;
-  final OrderRepository _orderRepository;
-  final ZipCodeGateway _zipCodeGateway;
+  late ProductRepository _productRepository;
+  late CouponRepository _couponRepository;
+  late OrderRepository _orderRepository;
+  late ZipCodeGateway _zipCodeGateway;
 
-  Checkout(this._productRepository, this._couponRepository,
-      this._orderRepository, this._zipCodeGateway);
+  Checkout(RepositoryFactory repositoryFactory, ZipCodeGateway zipCodeGateway) {
+    _orderRepository = repositoryFactory.createOrderRepository();
+    _productRepository = repositoryFactory.createProductRepository();
+    _couponRepository = repositoryFactory.createCouponRepository();
+    _zipCodeGateway = zipCodeGateway;
+  }
 
   Future<Map<String, Object>> call(Map<String, dynamic> input) async {
     final sequence = await _orderRepository.count();

@@ -6,7 +6,7 @@ final cepsAberto = [
     "longitude": -43.189716,
     "logradouro": "Rua Aires Saldanha",
     "bairro": "Copacabana",
-    "cidade": {"ddd": 21, "ibge": 3304557, "nome": "Rio de Janeiro"},
+    "cidade": {"ddd": 21, "ibge": "3304557", "nome": "Rio de Janeiro"},
     "estado": {"sigla": "RJ"},
   },
   {
@@ -17,7 +17,7 @@ final cepsAberto = [
     "logradouro": "Rua Almirante Lamego",
     "bairro": "Centro",
     "complemento": "- até 967/968",
-    "cidade": {"ddd": 48, "ibge": 4205407, "nome": "Florianópolis"},
+    "cidade": {"ddd": 48, "ibge": "4205407", "nome": "Florianópolis"},
     "estado": {"sigla": "SC"}
   },
   {
@@ -28,7 +28,7 @@ final cepsAberto = [
     'logradouro': 'Praça da Sé',
     'bairro': 'Sé',
     'complemento': '- lado ímpar',
-    'cidade': {'ibge': 3550308, 'nome': 'São Paulo', 'ddd': 11},
+    'cidade': {'ibge': "3550308", 'nome': 'São Paulo', 'ddd': 11},
     'estado': {'sigla': 'SP'},
   }
 ];

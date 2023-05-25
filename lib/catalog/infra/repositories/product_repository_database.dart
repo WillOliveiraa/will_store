@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:will_store/core/database/connection.dart';
+import 'package:will_store/core/database/database_connection.dart';
 
 import '../../application/repositories/product_repository.dart';
 import '../../domain/entities/product.dart';
 import '../models/product_model.dart';
 
 class ProductRepositoryDatabase implements ProductRepository {
-  final Connection _connection;
+  final DatabaseConnection _connection;
   final _productsCollection = 'products';
 
   ProductRepositoryDatabase(this._connection);
