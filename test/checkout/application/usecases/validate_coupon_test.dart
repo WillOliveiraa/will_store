@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
 import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/usecases/validate_coupon.dart';
-import 'package:will_store/core/database/fake_farebase_adapter.dart';
+import 'package:will_store/checkout/infra/factories/database_repository_factory.dart';
+import 'package:will_store/utils/database/fake_farebase_adapter.dart';
 
 import '../../../mocks/coupons_mock.dart';
 

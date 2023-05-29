@@ -3,9 +3,9 @@ import 'package:will_store/catalog/application/usecases/save_product.dart';
 import 'package:will_store/catalog/infra/models/dimentions_model.dart';
 import 'package:will_store/catalog/infra/models/item_size_model.dart';
 import 'package:will_store/catalog/infra/models/product_model.dart';
-import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
 import 'package:will_store/checkout/application/factories/repository_factory.dart';
-import 'package:will_store/core/database/fake_farebase_adapter.dart';
+import 'package:will_store/checkout/infra/factories/database_repository_factory.dart';
+import 'package:will_store/utils/database/fake_farebase_adapter.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();

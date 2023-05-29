@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:will_store/catalog/infra/models/product_model.dart';
-import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
 import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/usecases/save_order.dart';
+import 'package:will_store/checkout/infra/factories/database_repository_factory.dart';
 import 'package:will_store/checkout/infra/models/order_model.dart';
-import 'package:will_store/core/database/fake_farebase_adapter.dart';
+import 'package:will_store/utils/database/fake_farebase_adapter.dart';
 
 import '../../../mocks/products_mock.dart';
 

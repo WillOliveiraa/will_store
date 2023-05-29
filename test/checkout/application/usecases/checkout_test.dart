@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart' as http_mocka_dapter;
 import 'package:parameterized_test/parameterized_test.dart';
-import 'package:will_store/checkout/application/factories/database_repository_factory.dart';
 import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/usecases/checkout.dart';
-import 'package:will_store/core/database/fake_farebase_adapter.dart';
-import 'package:will_store/core/utils/constant.dart';
+import 'package:will_store/checkout/infra/factories/database_repository_factory.dart';
 import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
 import 'package:will_store/freight/infra/gateway/zip_code_gateway_http.dart';
 import 'package:will_store/freight/infra/http/dio_adapter.dart';
+import 'package:will_store/utils/database/fake_farebase_adapter.dart';
+import 'package:will_store/utils/utils/constant.dart';
 
 import '../../../mocks/cep_aberto.dart';
 import '../../../mocks/coupons_mock.dart';

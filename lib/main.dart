@@ -5,8 +5,8 @@ import 'package:will_store/catalog/domain/entities/dimentions.dart';
 import 'package:will_store/catalog/domain/entities/item_size.dart';
 import 'package:will_store/catalog/domain/entities/product.dart';
 
-import 'checkout/application/factories/database_repository_factory.dart';
-import 'core/database/firebase_adapter.dart';
+import 'checkout/infra/factories/database_repository_factory.dart';
+import 'utils/database/firebase_adapter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,6 +5,7 @@ class GetZipCode {
   final ZipCodeGateway _gateway;
 
   GetZipCode(this._gateway);
+
   Future<ZipCode?> call(String code) async {
     return await _gateway.getZipCode(code);
   }

@@ -4,9 +4,9 @@ import 'package:will_store/checkout/application/repositories/coupon_repository.d
 import 'package:will_store/checkout/application/repositories/order_repository.dart';
 
 import '../../../catalog/infra/repositories/product_repository_database.dart';
-import '../../../core/database/database_connection.dart';
-import '../../infra/repositories/coupon_repository_database.dart';
-import '../../infra/repositories/order_repository_database.dart';
+import '../../../utils/database/database_connection.dart';
+import '../repositories/coupon_repository_database.dart';
+import '../repositories/order_repository_database.dart';
 
 class DatabaseRepositoryFactory implements RepositoryFactory {
   final DatabaseConnection _connection;

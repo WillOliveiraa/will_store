@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:will_store/core/utils/constant.dart';
 import 'package:will_store/freight/infra/http/http_client.dart';
+import 'package:will_store/utils/utils/constant.dart';
 
 class DioAdapter implements HttpClient {
   late Dio _dio;

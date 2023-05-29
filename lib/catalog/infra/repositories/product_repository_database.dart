@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:will_store/core/database/database_connection.dart';
+import 'package:will_store/utils/database/database_connection.dart';
 
 import '../../application/repositories/product_repository.dart';
 import '../../domain/entities/product.dart';
