@@ -42,6 +42,18 @@ class OrderRepositoryDatabase implements OrderRepository {
     return output;
   }
 
+  @override
+  Future<List<Order>> getOrders() async {
+    final orderCollection = _connect.collection(_ordersCollection);
+    final ordersData = await orderCollection.get();
+    final List<Order> orders = [];
+    for (final item in ordersData.docs) {
+      final order = OrderModel.fromMap(_setId(item));
+      orders.add(order);
+    }
+    return orders;
+  }
+
   firebase.FirebaseFirestore get _connect =>
       (_connection.connect() as firebase.FirebaseFirestore);
 
@@ -49,9 +61,9 @@ class OrderRepositoryDatabase implements OrderRepository {
     return _connect.doc('$_ordersCollection/$id');
   }
 
-  Map<String, dynamic> _setId(firebase.DocumentSnapshot<Object?> productData) {
-    final data = productData.data() as Map<String, dynamic>;
-    data['id'] = productData.id;
+  Map<String, dynamic> _setId(firebase.DocumentSnapshot<Object?> orderData) {
+    final data = orderData.data() as Map<String, dynamic>;
+    data['id'] = orderData.id;
     return data;
   }
 }

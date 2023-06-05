@@ -8,8 +8,8 @@ import 'package:will_store/checkout/infra/factories/database_repository_factory.
 import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
 import 'package:will_store/freight/infra/gateway/zip_code_gateway_http.dart';
 import 'package:will_store/freight/infra/http/dio_adapter.dart';
+import 'package:will_store/utils/constant.dart';
 import 'package:will_store/utils/database/fake_farebase_adapter.dart';
-import 'package:will_store/utils/utils/constant.dart';
 
 import '../../../mocks/cep_aberto.dart';
 import '../../../mocks/coupons_mock.dart';

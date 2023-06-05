@@ -2,7 +2,7 @@ import 'package:will_store/freight/domain/entities/zip_code.dart';
 import 'package:will_store/freight/infra/http/http_client.dart';
 import 'package:will_store/freight/infra/models/zip_code_model.dart';
 
-import '../../../utils/utils/constant.dart';
+import '../../../utils/constant.dart';
 import '../../application/gateway/zip_code_gateway.dart';
 
 class ZipCodeGatewayHttp implements ZipCodeGateway {
