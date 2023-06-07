@@ -11,7 +11,8 @@ class OrderModel extends Order {
       'id': id,
       'cpf': cpf.value,
       'items': items
-          .map((e) => OrderItemModel(e.productId, e.price, e.quantity).toMap())
+          .map((e) =>
+              OrderItemModel(e.productId, e.price, e.quantity, e.id).toMap())
           .toList(),
       'sequence': sequence,
       'date': date.millisecondsSinceEpoch,

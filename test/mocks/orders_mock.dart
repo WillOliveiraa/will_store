@@ -5,6 +5,10 @@ final ordersMock = [
     "sequence": 1,
     "total": 150,
     "freight": 10,
-    "date": DateTime.now()
+    "date": DateTime.now(),
+    // "items": [
+    //   {"productId": '1', "price": 150, "quantity": 1},
+    //   {"productId": '2', "price": 250, "quantity": 5}
+    // ]
   }
 ];

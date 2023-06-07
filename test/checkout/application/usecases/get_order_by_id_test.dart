@@ -4,13 +4,15 @@ import 'package:will_store/checkout/application/usecases/get_order_by_id.dart';
 import 'package:will_store/checkout/infra/factories/database_repository_factory.dart';
 import 'package:will_store/utils/database/fake_farebase_adapter.dart';
 
-import '../../../mocks/orders_mock.dart';
+import '../utils/order_set_up.dart';
 
 void main() {
   final connection = FakeFirebaseAdapter();
   late GetOrderById getOrderById;
   late RepositoryFactory repositoryFactory;
   final List<Map<String, dynamic>> ordersSnap = [];
+  final List<Map<String, dynamic>> itemsOrderSnap = [];
+  final orderSetUp = OrderSetUp(connection);
 
   setUp(() {
     repositoryFactory = DatabaseRepositoryFactory(connection);
@@ -18,13 +20,8 @@ void main() {
   });
 
   setUpAll(() async {
-    final collection = connection.firestore.collection('orders');
-    for (int i = 0; i < ordersMock.length; i++) {
-      final snapshot = await collection.add(ordersMock[i]);
-      final orderMock = ordersMock[i];
-      orderMock['id'] = snapshot.id;
-      ordersSnap.add(orderMock);
-    }
+    itemsOrderSnap.addAll(await orderSetUp.itemsOrder());
+    ordersSnap.addAll(await orderSetUp.orders());
   });
 
   test('Deve buscar uma order pelo id', () async {
