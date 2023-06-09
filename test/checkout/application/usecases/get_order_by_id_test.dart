@@ -27,7 +27,8 @@ void main() {
   test('Deve buscar uma order pelo id', () async {
     final input = ordersSnap.first['id'];
     final output = await getOrderById(input);
-    expect(output['code'], equals("202300000001"));
+    expect(output.code, equals("202300000001"));
+    expect(output.items.length, equals(2));
   });
 
   test("Deve retornar um erro caso a ordem não seja encontrada", () {

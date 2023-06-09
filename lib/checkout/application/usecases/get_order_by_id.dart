@@ -1,3 +1,4 @@
+import '../../domain/entities/order.dart';
 import '../factories/repository_factory.dart';
 import '../repositories/order_repository.dart';
 
@@ -8,7 +9,7 @@ class GetOrderById {
     _orderRepository = repositoryFactory.createOrderRepository();
   }
 
-  Future<Map<String, dynamic>> call(String id) async {
+  Future<Order> call(String id) async {
     return await _orderRepository.getOrderById(id);
   }
 }

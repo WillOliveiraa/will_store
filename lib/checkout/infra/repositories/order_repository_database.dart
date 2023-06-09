@@ -32,17 +32,12 @@ class OrderRepositoryDatabase implements OrderRepository {
   }
 
   @override
-  Future<Map<String, dynamic>> getOrderById(String id) async {
+  Future<Order> getOrderById(String id) async {
     final orderData = await _getFirestoreRef(id).get();
     if (!orderData.exists) throw ArgumentError("Order not found");
     final order = OrderModel.fromMap(_setId(orderData));
-    // _getItemsOrder(order);
-    final output = {
-      "code": order.code,
-      "total": order.getTotal(),
-      "freight": order.freight,
-    };
-    return output;
+    order.items.addAll(await _getItemsOrder(order.id));
+    return order;
   }
 
   @override
