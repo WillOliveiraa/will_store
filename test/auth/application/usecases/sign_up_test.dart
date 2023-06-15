@@ -8,6 +8,8 @@ import 'package:will_store/auth/infra/repositories/user_repository_database.dart
 import 'package:will_store/utils/database/fake_farebase_adapter.dart';
 import 'package:will_store/utils/database/firebase_auth_adapter.dart';
 
+import '../../../mocks/user_mock.dart';
+
 class FirebaseAuthAdapterMock extends Mock implements FirebaseAuthAdapter {
   final MockFirebaseAuth mockAuth;
 
@@ -15,12 +17,6 @@ class FirebaseAuthAdapterMock extends Mock implements FirebaseAuthAdapter {
 }
 
 void main() {
-  final mockUser = MockUser(
-    isAnonymous: false,
-    uid: '1001',
-    email: 'will@teste.com',
-    displayName: 'Willian Oliveira',
-  );
   late FirebaseAuthAdapter firebaseAuth;
   late UserRepositoryDatabase userRepository;
   late SignUp signUp;

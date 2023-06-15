@@ -8,6 +8,7 @@ import '../../../utils/database/database_connection.dart';
 import '../../../utils/helpers/firebase_errors.dart';
 import '../../application/models/login_input.dart';
 import '../../application/repositories/user_repository.dart';
+import '../../domain/entities/email.dart';
 import '../../domain/entities/user.dart';
 import '../models/user_model.dart';
 
@@ -28,7 +29,7 @@ class UserRepositoryDatabase implements UserRepository {
   Future<Map<String, dynamic>> signUp(User user) async {
     try {
       final userCredential = await _connectAuth.createUserWithEmailAndPassword(
-          email: user.email, password: user.password!);
+          email: user.email.value, password: user.password!);
       return {"userId": userCredential.user!.uid};
     } on firebase.FirebaseException catch (e) {
       throw ArgumentError(getErrorString(e.code));
@@ -41,7 +42,7 @@ class UserRepositoryDatabase implements UserRepository {
       final userCredential = await _connectAuth.signInWithEmailAndPassword(
           email: input.email, password: input.password);
       final user = userCredential.user;
-      return User(username: user!.displayName!, email: user.email!);
+      return User(username: user!.displayName!, email: Email(user.email!));
     } on firebaseAuth.FirebaseAuthException catch (e) {
       throw ArgumentError(getErrorString(e.code));
     }
@@ -54,7 +55,7 @@ class UserRepositoryDatabase implements UserRepository {
       throw ArgumentError('User not found');
     }
     final userData = await _getFirestoreRef(userId).get();
-    if (!userData.exists) throw ArgumentError('User not found');
+    // if (!userData.exists) throw ArgumentError('User not found');
     return UserModel.fromMap(_setId(userData));
   }
 
