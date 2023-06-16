@@ -1,12 +1,11 @@
 const cleanRegex = r'[^\d]';
 
 class Cpf {
-  final String _cpf;
   late String _value;
 
-  Cpf(this._cpf) {
-    if (_cpf.isEmpty || !validate(_cpf)) throw ArgumentError("Invalid cpf");
-    _value = _cpf;
+  Cpf(String cpf) {
+    if (cpf.isEmpty || !validate(cpf)) throw ArgumentError("Invalid cpf");
+    _value = cpf;
   }
 
   int _calculateDigit(String cpf, int factor) {

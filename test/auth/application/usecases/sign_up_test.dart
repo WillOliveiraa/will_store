@@ -21,7 +21,14 @@ void main() {
   late UserRepositoryDatabase userRepository;
   late SignUp signUp;
   final connection = FakeFirebaseAdapter();
-  final input = SignUpInput(mockUser.displayName!, mockUser.email!, '123123');
+  final userMock = usersMock.first;
+  final input = SignUpInput(
+    firstName: userMock['firstName'],
+    lastName: userMock['lastName'],
+    email: userMock['email'],
+    cpf: userMock['cpf'],
+    password: userMock['password'],
+  );
   final mockFirebaseAuth = MockFirebaseAuth(mockUser: mockUser, signedIn: true);
 
   setUp(() {
@@ -36,8 +43,8 @@ void main() {
     final getUser = GetUser(userRepository);
     final output = await getUser(userId);
     expect(output.id, equals(userId));
-    expect(output.username, equals(input.username));
-    expect(output.email, equals(input.email));
+    expect(output.firstName, equals(input.firstName));
+    expect(output.email.value, equals(input.email));
   });
 
   test('Não deve cadastrar um novo usuário com e-mail duplicado', () {

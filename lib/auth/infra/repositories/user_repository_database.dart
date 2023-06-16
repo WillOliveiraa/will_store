@@ -28,7 +28,7 @@ class UserRepositoryDatabase implements UserRepository {
   Future<Map<String, dynamic>> signUp(User user) async {
     try {
       final userCredential = await _connectAuth.createUserWithEmailAndPassword(
-          email: user.email.value, password: user.password!);
+          email: user.email.value, password: user.password!.value);
       return {"userId": userCredential.user!.uid};
     } on firebase.FirebaseException catch (e) {
       throw ArgumentError(getErrorString(e.code));

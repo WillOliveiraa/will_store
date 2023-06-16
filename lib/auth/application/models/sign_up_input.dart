@@ -1,7 +1,15 @@
 class SignUpInput {
-  final String username;
+  final String firstName;
+  final String lastName;
   final String email;
+  final String cpf;
   final String password;
 
-  SignUpInput(this.username, this.email, this.password);
+  SignUpInput({
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.cpf,
+    required this.password,
+  });
 }

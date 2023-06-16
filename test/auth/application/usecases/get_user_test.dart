@@ -46,7 +46,7 @@ void main() {
     final output = await getUser(input);
     expect(output.id, equals(usersMock.first['id']));
     expect(output.email.value, equals(usersMock.first['email']));
-    expect(output.username, equals(usersMock.first['username']));
+    expect(output.firstName, equals(usersMock.first['firstName']));
   });
 
   test('Deve retornar um erro quando não encontrar um usúario', () {
