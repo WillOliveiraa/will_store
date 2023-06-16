@@ -4,6 +4,6 @@ import '../models/login_input.dart';
 abstract class UserRepository {
   Future<void> save(User user);
   Future<Map<String, dynamic>> signUp(User user);
-  Future<User?> login(LoginInput input);
+  Future<String> login(LoginInput input);
   Future<User> getCurrentUser(String userId);
 }

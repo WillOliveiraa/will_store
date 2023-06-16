@@ -8,7 +8,6 @@ import '../../../utils/database/database_connection.dart';
 import '../../../utils/helpers/firebase_errors.dart';
 import '../../application/models/login_input.dart';
 import '../../application/repositories/user_repository.dart';
-import '../../domain/entities/email.dart';
 import '../../domain/entities/user.dart';
 import '../models/user_model.dart';
 
@@ -37,12 +36,12 @@ class UserRepositoryDatabase implements UserRepository {
   }
 
   @override
-  Future<User?> login(LoginInput input) async {
+  Future<String> login(LoginInput input) async {
     try {
       final userCredential = await _connectAuth.signInWithEmailAndPassword(
           email: input.email, password: input.password);
       final user = userCredential.user;
-      return User(username: user!.displayName!, email: Email(user.email!));
+      return user!.uid;
     } on firebaseAuth.FirebaseAuthException catch (e) {
       throw ArgumentError(getErrorString(e.code));
     }
@@ -55,7 +54,6 @@ class UserRepositoryDatabase implements UserRepository {
       throw ArgumentError('User not found');
     }
     final userData = await _getFirestoreRef(userId).get();
-    // if (!userData.exists) throw ArgumentError('User not found');
     return UserModel.fromMap(_setId(userData));
   }
 
