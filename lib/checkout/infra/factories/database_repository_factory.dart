@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:will_store/catalog/application/repositories/product_repository.dart';
 import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/repositories/coupon_repository.dart';
@@ -10,8 +11,10 @@ import '../repositories/order_repository_database.dart';
 
 class DatabaseRepositoryFactory implements RepositoryFactory {
   final DatabaseConnection _connection;
+  final FirebaseStorage? _storage;
 
-  DatabaseRepositoryFactory(this._connection);
+  DatabaseRepositoryFactory(this._connection, {FirebaseStorage? storage})
+      : _storage = storage;
 
   @override
   OrderRepository createOrderRepository() {
@@ -25,6 +28,6 @@ class DatabaseRepositoryFactory implements RepositoryFactory {
 
   @override
   ProductRepository createProductRepository() {
-    return ProductRepositoryDatabase(_connection);
+    return ProductRepositoryDatabase(_connection, _storage!);
   }
 }

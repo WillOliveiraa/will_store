@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart' as firebase;
 import 'package:will_store/checkout/infra/models/order_item_model.dart';
+import 'package:will_store/utils/constant.dart';
 import 'package:will_store/utils/database/database_connection.dart';
 
 import '../../application/repositories/order_repository.dart';
@@ -8,21 +9,18 @@ import '../models/order_model.dart';
 
 class OrderRepositoryDatabase implements OrderRepository {
   final DatabaseConnection _connection;
-  final _ordersCollection = "orders";
-  final _itemsCollection = "itemsOrders";
 
   OrderRepositoryDatabase(this._connection);
 
   @override
   Future<int> count() async {
-    final queryData =
-        await _connect.collection(_ordersCollection).count().get();
+    final queryData = await _connect.collection(ordersCollection).count().get();
     return queryData.count;
   }
 
   @override
   Future<void> save(Order order) async {
-    final orderCollection = _connect.collection(_ordersCollection);
+    final orderCollection = _connect.collection(ordersCollection);
     await orderCollection.add((OrderModel(
             cpf: order.cpf.value,
             id: order.id,
@@ -42,7 +40,7 @@ class OrderRepositoryDatabase implements OrderRepository {
 
   @override
   Future<List<Order>> getOrders() async {
-    final orderCollection = _connect.collection(_ordersCollection);
+    final orderCollection = _connect.collection(ordersCollection);
     final ordersData = await orderCollection.get();
     final List<Order> orders = [];
     for (final item in ordersData.docs) {
@@ -55,7 +53,7 @@ class OrderRepositoryDatabase implements OrderRepository {
 
   Future<List<OrderItemModel>> _getItemsOrder(String? orderId) async {
     List<OrderItemModel> itemsOrder = [];
-    final itemCollection = _connect.collection(_itemsCollection);
+    final itemCollection = _connect.collection(itemsCollection);
     final itemsData = await itemCollection.get();
     for (final itemOrder in itemsData.docs) {
       if (itemOrder['orderId'] == orderId) {
@@ -70,7 +68,7 @@ class OrderRepositoryDatabase implements OrderRepository {
       (_connection.connect() as firebase.FirebaseFirestore);
 
   firebase.DocumentReference _getFirestoreRef(String id) {
-    return _connect.doc('$_ordersCollection/$id');
+    return _connect.doc('$ordersCollection/$id');
   }
 
   Map<String, dynamic> _setId(firebase.DocumentSnapshot<Object?> orderData) {

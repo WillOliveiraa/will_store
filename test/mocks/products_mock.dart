@@ -1,3 +1,10 @@
+import 'dart:io';
+
+// ignore: depend_on_referenced_packages
+import 'package:file/memory.dart';
+
+const filename = 'someimage.png';
+
 final productsMock = [
   {
     "id": "1",
@@ -62,3 +69,10 @@ final productsMock = [
     ],
   }
 ];
+
+File getFakeImageFile() {
+  var fs = MemoryFileSystem();
+  final image = fs.file(filename);
+  image.writeAsStringSync('contents');
+  return image;
+}

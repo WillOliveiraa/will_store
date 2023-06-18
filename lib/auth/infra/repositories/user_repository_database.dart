@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firebase;
 // ignore: library_prefixes
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:will_store/utils/constant.dart';
 
 import '../../../utils/database/auth_connection.dart';
 import '../../../utils/database/database_connection.dart';
@@ -14,7 +15,6 @@ import '../models/user_model.dart';
 class UserRepositoryDatabase implements UserRepository {
   final AuthConnection _auth;
   final DatabaseConnection _connection;
-  final _usersCollection = "users";
 
   UserRepositoryDatabase(this._auth, this._connection);
 
@@ -63,7 +63,7 @@ class UserRepositoryDatabase implements UserRepository {
       (_connection.connect() as firebase.FirebaseFirestore);
 
   firebase.DocumentReference _getFirestoreRef(String id) {
-    return _connect.doc('$_usersCollection/$id');
+    return _connect.doc('$usersCollection/$id');
   }
 
   Map<String, dynamic> _setId(firebase.DocumentSnapshot<Object?> userData) {

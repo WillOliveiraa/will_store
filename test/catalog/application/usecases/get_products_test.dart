@@ -1,30 +1,30 @@
+import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:will_store/catalog/application/factories/repository_factory.dart';
 import 'package:will_store/catalog/application/usecases/get_products.dart';
-import 'package:will_store/checkout/application/factories/repository_factory.dart';
-import 'package:will_store/checkout/infra/factories/database_repository_factory.dart';
+import 'package:will_store/catalog/infra/factories/database_repository_factory.dart';
 import 'package:will_store/utils/database/fake_farebase_adapter.dart';
 
-import '../../../mocks/products_mock.dart';
+import '../utils/product_set_up.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
+  final storage = MockFirebaseStorage();
   late RepositoryFactory repositoryFactory;
   late GetProducts getProducts;
+  final List<Map<String, dynamic>> productsSnap = [];
+  final productSetUp = ProductSetUp(connection);
 
   setUp(() {
-    repositoryFactory = DatabaseRepositoryFactory(connection);
+    repositoryFactory = DatabaseRepositoryFactory(connection, storage);
     getProducts = GetProducts(repositoryFactory);
   });
 
+  setUpAll(() async {
+    productsSnap.addAll(await productSetUp.products());
+  });
+
   test("Deve listar todos os produtos salvos", () async {
-    final collection = connection.firestore.collection('products');
-    final List<Map<String, dynamic>> productsSnap = [];
-    for (int i = 0; i < productsMock.length; i++) {
-      final snapshot = await collection.add(productsMock[i]);
-      final productMock = productsMock[i];
-      productMock['id'] = snapshot.id;
-      productsSnap.add(productMock);
-    }
     final products = await getProducts();
     expect(products.length, equals(3));
     expect(products.first.id, equals(productsSnap.first['id']));

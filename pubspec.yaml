@@ -16,9 +16,11 @@ dependencies:
   string_validator: ^1.0.0
   cloud_firestore: ^4.5.2
   firebase_core: ^2.10.0
+  firebase_storage: ^11.2.3
   firebase_auth: ^4.6.2
   firebase_auth_mocks: ^0.11.0
   dio: ^5.1.2
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test: 
@@ -29,6 +31,7 @@ dev_dependencies:
   fake_cloud_firestore: ^2.4.1+1
   http_mock_adapter: ^0.4.4
   mocktail: ^0.3.0
+  firebase_storage_mocks: ^0.6.1
 
 flutter:
   uses-material-design: true

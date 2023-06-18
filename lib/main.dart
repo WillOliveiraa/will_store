@@ -1,18 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:will_store/catalog/application/usecases/save_product.dart';
 import 'package:will_store/catalog/domain/entities/dimentions.dart';
 import 'package:will_store/catalog/domain/entities/item_size.dart';
 import 'package:will_store/catalog/domain/entities/product.dart';
 
-import 'checkout/infra/factories/database_repository_factory.dart';
+import 'catalog/infra/factories/database_repository_factory.dart';
 import 'utils/database/firebase_adapter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   final connection = FirebaseAdapter();
-  final repositoryFactory = DatabaseRepositoryFactory(connection);
+  final storage = FirebaseStorage.instance;
+  final repositoryFactory = DatabaseRepositoryFactory(connection, storage);
   SaveProduct saveProduct = SaveProduct(repositoryFactory);
   final product = Product("1", "Product test 1", "Product muito bom", null,
       [ItemSize("1", "P", 19.99, 5, Dimentions("1", 100, 30, 10, 3))]);

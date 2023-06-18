@@ -21,7 +21,7 @@ class ProductModel extends Product {
       map['id'] != null ? map['id'] as String : null,
       map['name'] as String,
       map['description'] as String,
-      map['images'] != null ? List<String>.from((map['images'])) : null,
+      map['images'] != null ? List<dynamic>.from((map['images'])) : null,
       List.from(map['itemSize']).map((x) => ItemSizeModel.fromMap(x)).toList(),
     );
   }
