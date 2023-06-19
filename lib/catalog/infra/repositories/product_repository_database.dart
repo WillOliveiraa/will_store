@@ -19,7 +19,33 @@ class ProductRepositoryDatabase implements ProductRepository {
 
   @override
   Future<String> save(Product product) async {
+    List<dynamic>? imagesToUpdate;
+    if (product.images != null) {
+      imagesToUpdate = List<dynamic>.from(product.images!);
+      product.images = null;
+    }
     final productCollection = _connect.collection(productsCollection);
+    final reference =
+        await productCollection.add((product as ProductModel).toMap());
+    product.id = reference.id;
+    if (imagesToUpdate != null) {
+      product.images = imagesToUpdate;
+      await _setUrlImages(product);
+      _updateProductImages(product.images!, product.id!);
+    }
+    return reference.id;
+  }
+
+  @override
+  Future<void> update(Product product) async {
+    if (product.id != null) {
+      await _setUrlImages(product);
+      final reference = _getFirestoreRef(product.id!);
+      reference.set((product as ProductModel).toMap());
+    }
+  }
+
+  Future<void> _setUrlImages(Product product) async {
     if (product.images != null) {
       for (int i = 0; i < product.images!.length; i++) {
         final item = product.images![i];
@@ -30,9 +56,6 @@ class ProductRepositoryDatabase implements ProductRepository {
         }
       }
     }
-    final reference =
-        await productCollection.add((product as ProductModel).toMap());
-    return reference.id;
   }
 
   @override
@@ -52,6 +75,12 @@ class ProductRepositoryDatabase implements ProductRepository {
     final productData = await _getFirestoreRef(id).get();
     if (!productData.exists) throw ArgumentError("Product not found");
     return ProductModel.fromMap(_setId(productData));
+  }
+
+  Future<void>? _updateProductImages(
+      List<dynamic> updateImages, String productId) async {
+    _getFirestoreRef(productId)
+        .update({imagesCollectionAtribute: updateImages});
   }
 
   FirebaseFirestore get _connect =>

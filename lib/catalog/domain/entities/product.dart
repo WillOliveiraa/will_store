@@ -1,10 +1,10 @@
 import 'package:will_store/catalog/domain/entities/item_size.dart';
 
 class Product {
-  final String? id;
+  String? id;
   final String name;
   final String description;
-  final List<dynamic>? images;
+  List<dynamic>? images;
   final List<ItemSize> itemSize;
 
   Product(

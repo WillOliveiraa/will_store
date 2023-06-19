@@ -2,6 +2,7 @@ import '../../domain/entities/product.dart';
 
 abstract class ProductRepository {
   Future<String> save(Product product);
+  Future<void> update(Product product);
   Future<List<Product>> getProducts();
   Future<Product> getProductById(String id);
   Future<String> saveImageToStorage(dynamic image, String productId);
