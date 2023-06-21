@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firebase;
 // ignore: library_prefixes
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
+import 'package:will_store/auth/domain/entities/cart_item.dart';
 import 'package:will_store/utils/constant.dart';
 
 import '../../../utils/database/auth_connection.dart';
@@ -10,6 +11,7 @@ import '../../../utils/helpers/firebase_errors.dart';
 import '../../application/models/login_input.dart';
 import '../../application/repositories/user_repository.dart';
 import '../../domain/entities/user.dart';
+import '../models/cart_item_model.dart';
 import '../models/user_model.dart';
 
 class UserRepositoryDatabase implements UserRepository {
@@ -57,6 +59,17 @@ class UserRepositoryDatabase implements UserRepository {
     return UserModel.fromMap(_setId(userData));
   }
 
+  @override
+  Future<List<CartItem>> getItemsFromCart(String userId) async {
+    final snapsCarts = await _cartReference(userId).get();
+    final List<CartItemModel> cartItems = [];
+    for (final item in snapsCarts.docs) {
+      final cartItem = CartItemModel.fromMap(_setId(item));
+      cartItems.add(cartItem);
+    }
+    return cartItems;
+  }
+
   MockFirebaseAuth get _connectAuth => (_auth.connect() as MockFirebaseAuth);
 
   firebase.FirebaseFirestore get _connect =>
@@ -64,6 +77,10 @@ class UserRepositoryDatabase implements UserRepository {
 
   firebase.DocumentReference _getFirestoreRef(String id) {
     return _connect.doc('$usersCollection/$id');
+  }
+
+  firebase.CollectionReference _cartReference(String userId) {
+    return _getFirestoreRef(userId).collection(cartItemCollection);
   }
 
   Map<String, dynamic> _setId(firebase.DocumentSnapshot<Object?> userData) {
