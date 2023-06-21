@@ -23,9 +23,10 @@ class CartRepositoryDatabase implements CartRepository {
   }
 
   @override
-  Future<void> updateCartItem(CartItem cartItem) {
-    // TODO: implement updateCartItem
-    throw UnimplementedError();
+  Future<void> updateCartItem(CartItem cartItem, String userId) async {
+    await _cartReference(userId)
+        .doc(cartItem.id)
+        .update((cartItem as CartItemModel).toMap());
   }
 
   firebase.FirebaseFirestore get _connect =>
