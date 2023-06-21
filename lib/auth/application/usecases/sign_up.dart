@@ -4,7 +4,7 @@ import '../../domain/entities/user.dart';
 import '../../infra/models/email_model.dart';
 import '../../infra/models/user_model.dart';
 import '../../infra/repositories/user_repository_database.dart';
-import '../models/sign_up_input.dart';
+import '../inputs/sign_up_input.dart';
 
 class SignUp {
   final UserRepositoryDatabase userRepository;

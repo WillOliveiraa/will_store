@@ -2,10 +2,10 @@ import 'package:will_store/catalog/application/repositories/product_repository.d
 import 'package:will_store/checkout/application/factories/repository_factory.dart';
 import 'package:will_store/checkout/application/repositories/order_repository.dart';
 import 'package:will_store/freight/application/gateway/zip_code_gateway.dart';
-import 'package:will_store/freight/application/models/calculate_freight_input.dart';
+import 'package:will_store/freight/application/inputs/calculate_freight_input.dart';
 import 'package:will_store/freight/domain/entities/freight_calculate.dart';
 
-import '../../../freight/application/models/calculate_freight_item.dart';
+import '../../../freight/application/inputs/calculate_freight_item.dart';
 import '../../domain/entities/order.dart';
 import '../repositories/coupon_repository.dart';
 

@@ -1,7 +1,7 @@
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:will_store/auth/application/models/sign_up_input.dart';
+import 'package:will_store/auth/application/inputs/sign_up_input.dart';
 import 'package:will_store/auth/application/usecases/get_user.dart';
 import 'package:will_store/auth/application/usecases/sign_up.dart';
 import 'package:will_store/auth/infra/repositories/user_repository_database.dart';

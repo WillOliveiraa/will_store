@@ -1,6 +1,6 @@
 import 'package:will_store/auth/domain/entities/user.dart';
 
-import '../models/login_input.dart';
+import '../inputs/login_input.dart';
 import '../repositories/user_repository.dart';
 
 class Login {

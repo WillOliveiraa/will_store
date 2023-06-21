@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../../application/models/calculate_freight_input.dart';
+import '../../application/inputs/calculate_freight_input.dart';
 import 'distance_calculator.dart';
 
 class FreightCalculate {

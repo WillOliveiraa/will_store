@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:will_store/freight/application/models/calculate_freight_input.dart';
-import 'package:will_store/freight/application/models/calculate_freight_item.dart';
+import 'package:will_store/freight/application/inputs/calculate_freight_input.dart';
+import 'package:will_store/freight/application/inputs/calculate_freight_item.dart';
 import 'package:will_store/freight/domain/entities/freight_calculate.dart';
 
 void main() {
