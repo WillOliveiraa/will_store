@@ -1,8 +1,8 @@
 import '../../domain/entities/cart_item.dart';
-import '../repositories/user_repository.dart';
+import '../repositories/cart_repository.dart';
 
 class GetItemsFromCart {
-  final UserRepository _repository;
+  final CartRepository _repository;
 
   GetItemsFromCart(this._repository);
 
