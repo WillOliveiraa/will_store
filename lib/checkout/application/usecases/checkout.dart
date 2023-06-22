@@ -29,6 +29,7 @@ class Checkout {
       cpf: input['cpf'],
       sequence: sequence + 1,
       date: input['date'],
+      userId: '1',
     );
     if (!input.containsKey('items') || (input['items'] as List).isEmpty) {
       throw ArgumentError("Invalid items");

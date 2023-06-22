@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart' as http_mocka_dapter;
 import 'package:parameterized_test/parameterized_test.dart';
@@ -18,6 +19,7 @@ import '../../../mocks/products_mock.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
+  final storage = MockFirebaseStorage();
   final dio = Dio(BaseOptions(baseUrl: urlCepAberto));
   final httpDioMockAdapter = http_mocka_dapter.DioAdapter(dio: dio);
   dio.httpClientAdapter = httpDioMockAdapter;
@@ -34,7 +36,7 @@ void main() async {
   final headers = <String, dynamic>{'authorization': tokenCepStr};
 
   setUp(() {
-    repositoryFactory = DatabaseRepositoryFactory(connection);
+    repositoryFactory = DatabaseRepositoryFactory(connection, storage: storage);
     zipCodeGateway = ZipCodeGatewayHttp(httpClient);
     checkout = Checkout(repositoryFactory, zipCodeGateway);
   });
@@ -247,6 +249,7 @@ void main() async {
     final orderData = ordersData.docs.last.data();
     expect(output['total'], equals(100));
     expect(orderData['code'], equals("202300000008"));
+    // TODO: refactory this method
   });
 
   test("Não deve criar um pedido se o produto estiver com dimensão inválida",

@@ -10,7 +10,7 @@ void main() {
     const id = "1";
     const cpf = "406.302.170-27";
     expect(
-        () async => Order(id: id, cpf: cpf),
+        () async => Order(id: id, cpf: cpf, userId: '1'),
         throwsA(isA<ArgumentError>()
             .having((error) => error.message, "message", "Invalid cpf")));
   });
@@ -18,14 +18,14 @@ void main() {
   test('Deve criar um pedido com CPF válido', () {
     const id = "1";
     const cpf = "407.302.170-27";
-    final order = Order(id: id, cpf: cpf);
+    final order = Order(id: id, cpf: cpf, userId: '1');
     expect(order.getTotal(), equals(0));
   });
 
   test('Deve criar um pedido com 3 produtos', () {
     const id = "1";
     const cpf = "407.302.170-27";
-    final order = Order(id: id, cpf: cpf);
+    final order = Order(id: id, cpf: cpf, userId: '1');
     order.addItem(ProductModel.fromMap(productsMock[0]), 1);
     order.addItem(ProductModel.fromMap(productsMock[1]), 1);
     order.addItem(ProductModel.fromMap(productsMock[2]), 1);
@@ -38,7 +38,7 @@ void main() {
     p1((int value) {
       const id = "1";
       const cpf = "407.302.170-27";
-      final order = Order(id: id, cpf: cpf);
+      final order = Order(id: id, cpf: cpf, userId: '1');
       expect(
           () async =>
               order.addItem(ProductModel.fromMap(productsMock[0]), value),
@@ -50,7 +50,7 @@ void main() {
   test('Não deve criar um pedido com o produto duplicado', () {
     const id = "1";
     const cpf = "407.302.170-27";
-    final order = Order(id: id, cpf: cpf);
+    final order = Order(id: id, cpf: cpf, userId: '1');
     order.addItem(ProductModel.fromMap(productsMock[0]), 1);
     expect(
         () async => order.addItem(ProductModel.fromMap(productsMock[0]), 1),
@@ -61,7 +61,7 @@ void main() {
   test('Deve criar um pedido e gerar um código', () {
     const id = "1";
     const cpf = "407.302.170-27";
-    final order = Order(id: id, cpf: cpf, date: DateTime.now());
+    final order = Order(id: id, cpf: cpf, date: DateTime.now(), userId: '1');
     expect(order.code, equals("202300000001"));
   });
 }

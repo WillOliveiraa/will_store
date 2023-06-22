@@ -14,12 +14,14 @@ class Order {
   // ignore: prefer_final_fields
   num _freight;
   final String _code;
+  final String userId;
 
   Order({
     this.id,
     required String cpf,
     this.sequence = 1,
     DateTime? date,
+    required this.userId,
   })  : cpf = Cpf(cpf),
         date = date ?? DateTime.now(),
         items = [],

@@ -4,5 +4,6 @@ abstract class OrderRepository {
   Future<int> count();
   Future<void> save(Order order);
   Future<Order> getOrderById(String id);
-  Future<List<Order>> getOrders();
+  Future<List<Order>> getMyOrders(String userId);
+  Future<List<Order>> getAllOrders();
 }

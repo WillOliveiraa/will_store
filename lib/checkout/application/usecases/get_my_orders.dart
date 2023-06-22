@@ -3,14 +3,14 @@ import 'package:will_store/checkout/domain/entities/order.dart';
 
 import '../factories/repository_factory.dart';
 
-class GetOrders {
+class GetMyOrders {
   late OrderRepository _orderRepository;
 
-  GetOrders(RepositoryFactory repositoryFactory) {
+  GetMyOrders(RepositoryFactory repositoryFactory) {
     _orderRepository = repositoryFactory.createOrderRepository();
   }
 
-  Future<List<Order>> call() async {
-    return await _orderRepository.getOrders();
+  Future<List<Order>> call(String userId) async {
+    return await _orderRepository.getMyOrders(userId);
   }
 }

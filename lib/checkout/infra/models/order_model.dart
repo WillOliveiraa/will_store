@@ -4,7 +4,13 @@ import '../../domain/entities/order.dart';
 import 'order_item_model.dart';
 
 class OrderModel extends Order {
-  OrderModel({required super.cpf, super.id, super.sequence, super.date});
+  OrderModel({
+    required super.cpf,
+    super.id,
+    super.sequence,
+    super.date,
+    required super.userId,
+  });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -26,6 +32,7 @@ class OrderModel extends Order {
       cpf: map['cpf'] as String,
       sequence: map['sequence'] as int,
       date: (map['date'] as firestore.Timestamp).toDate(),
+      userId: map['userId'] as String,
     );
   }
 }

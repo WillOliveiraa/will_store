@@ -14,19 +14,21 @@ class OrderRepositoryDatabase implements OrderRepository {
 
   @override
   Future<int> count() async {
-    final queryData = await _connect.collection(ordersCollection).count().get();
+    final queryData = await _orderCollection().count().get();
     return queryData.count;
   }
 
   @override
   Future<void> save(Order order) async {
-    final orderCollection = _connect.collection(ordersCollection);
-    await orderCollection.add((OrderModel(
-            cpf: order.cpf.value,
-            id: order.id,
-            sequence: order.sequence,
-            date: order.date))
-        .toMap());
+    await _orderCollection().add(
+      (OrderModel(
+        cpf: order.cpf.value,
+        id: order.id,
+        sequence: order.sequence,
+        date: order.date,
+        userId: order.userId,
+      )).toMap(),
+    );
   }
 
   @override
@@ -39,11 +41,29 @@ class OrderRepositoryDatabase implements OrderRepository {
   }
 
   @override
-  Future<List<Order>> getOrders() async {
-    final orderCollection = _connect.collection(ordersCollection);
-    final ordersData = await orderCollection.get();
+  Future<List<Order>> getAllOrders() async {
+    final ordersData = await _orderCollection().get();
     final List<Order> orders = [];
     for (final item in ordersData.docs) {
+      final order = OrderModel.fromMap(_setId(item));
+      order.items.addAll(await _getItemsOrder(order.id));
+      orders.add(order);
+    }
+    return orders;
+  }
+
+  @override
+  Future<List<OrderModel>> getMyOrders(String userId) async {
+    final ordersData =
+        await _orderCollection().where('userId', isEqualTo: userId).get();
+    final List<OrderModel> orders = await _setOrderList(ordersData.docs);
+    return orders;
+  }
+
+  Future<List<OrderModel>> _setOrderList(
+      List<firebase.QueryDocumentSnapshot<Object?>> ordersData) async {
+    final List<OrderModel> orders = [];
+    for (final item in ordersData) {
       final order = OrderModel.fromMap(_setId(item));
       order.items.addAll(await _getItemsOrder(order.id));
       orders.add(order);
@@ -67,8 +87,12 @@ class OrderRepositoryDatabase implements OrderRepository {
   firebase.FirebaseFirestore get _connect =>
       (_connection.connect() as firebase.FirebaseFirestore);
 
+  firebase.CollectionReference _orderCollection() {
+    return _connect.collection(ordersCollection);
+  }
+
   firebase.DocumentReference _getFirestoreRef(String id) {
-    return _connect.doc('$ordersCollection/$id');
+    return _orderCollection().doc(id);
   }
 
   Map<String, dynamic> _setId(firebase.DocumentSnapshot<Object?> orderData) {

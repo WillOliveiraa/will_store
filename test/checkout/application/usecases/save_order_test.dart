@@ -20,10 +20,7 @@ void main() {
 
   test('Deve salvar uma nova ordem', () async {
     final product = ProductModel.fromMap(productsMock.first);
-    final input = OrderModel(
-      id: "1",
-      cpf: "407.302.170-27",
-    );
+    final input = OrderModel(id: "1", cpf: "407.302.170-27", userId: '1');
     input.addItem(product, 1);
     await saveOrder(input);
     final ordersCollection =
