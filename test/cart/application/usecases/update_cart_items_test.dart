@@ -36,6 +36,6 @@ void main() async {
     final output = await getItemsFromCart(userId);
     expect(output.first.quantity, 5);
     expect(output.first.productId, '1');
-    expect(output.first.size, 'GG');
+    expect(output.first.sizeName, 'GG');
   });
 }

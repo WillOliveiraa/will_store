@@ -41,6 +41,6 @@ void main() async {
     expect(output.length, 3);
     expect(output.last.quantity, 10);
     expect(output.last.productId, '5');
-    expect(output.last.size, 'G');
+    expect(output.last.sizeName, 'G');
   });
 }
