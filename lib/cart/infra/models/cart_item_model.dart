@@ -15,6 +15,7 @@ class CartItemModel extends CartItem {
       'productId': productId,
       'quantity': quantity,
       'sizeName': sizeName,
+      'userId': userId,
     };
   }
 

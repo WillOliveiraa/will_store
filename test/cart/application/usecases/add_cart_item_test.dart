@@ -26,7 +26,7 @@ void main() async {
     usersSnap.addAll(await userSetUp.users());
   });
 
-  test('Deve atualizar um item do carrinho', () async {
+  test('Deve adiciona um item do carrinho', () async {
     final userId = usersSnap.first['id'];
     final input = {
       "id": "14",
