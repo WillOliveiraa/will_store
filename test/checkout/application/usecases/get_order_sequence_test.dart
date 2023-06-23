@@ -10,8 +10,6 @@ void main() {
   final connection = FakeFirebaseAdapter();
   late GetOrderSequence getOrderSequence;
   late RepositoryFactory repositoryFactory;
-  final List<Map<String, dynamic>> ordersSnap = [];
-  final List<Map<String, dynamic>> itemsOrderSnap = [];
   final orderSetUp = OrderSetUp(connection);
 
   setUp(() {
@@ -20,12 +18,11 @@ void main() {
   });
 
   setUpAll(() async {
-    itemsOrderSnap.addAll(await orderSetUp.itemsOrder());
-    ordersSnap.addAll(await orderSetUp.orders());
+    await orderSetUp.sequences();
   });
 
   test('Deve buscar uma sequencia nova da ordem', () async {
     final output = await getOrderSequence();
-    expect(output, equals(1));
+    expect(output, 2);
   });
 }

@@ -23,11 +23,11 @@ class Checkout {
   }
 
   Future<Map<String, Object>> call(Map<String, dynamic> input) async {
-    final sequence = await _orderRepository.count();
+    final sequence = await _orderRepository.getOrderSequence();
     final order = Order(
       id: input['id'],
       cpf: input['cpf'],
-      sequence: sequence + 1,
+      sequence: sequence,
       date: input['date'],
       userId: '1',
     );

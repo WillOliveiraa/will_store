@@ -10,6 +10,7 @@ const imagesCollectionAtribute = 'images';
 const couponsCollection = 'coupons';
 const ordersCollection = 'orders';
 const itemsCollection = 'itemsOrders';
+const auxOrderSequenceCollection = 'aux/orderSequence';
 const cartItemCollection = 'cartItem';
 
 // CIELO PAYMENT

@@ -13,9 +13,15 @@ class OrderRepositoryDatabase implements OrderRepository {
   OrderRepositoryDatabase(this._connection);
 
   @override
-  Future<int> count() async {
-    final queryData = await _orderCollection().count().get();
-    return queryData.count;
+  Future<int> getOrderSequence() async {
+    final auxOrderRef = _auxOrderRef();
+    final output = await _connect.runTransaction((transaction) async {
+      final reference = await transaction.get(auxOrderRef);
+      final orderSequence = reference.get('current') as int;
+      transaction.update(auxOrderRef, {'current': orderSequence + 1});
+      return {'orderSequence': orderSequence};
+    });
+    return output['orderSequence'] as int;
   }
 
   @override
@@ -93,6 +99,10 @@ class OrderRepositoryDatabase implements OrderRepository {
 
   firebase.DocumentReference _getFirestoreRef(String id) {
     return _orderCollection().doc(id);
+  }
+
+  firebase.DocumentReference _auxOrderRef() {
+    return _connect.doc(auxOrderSequenceCollection);
   }
 
   Map<String, dynamic> _setId(firebase.DocumentSnapshot<Object?> orderData) {

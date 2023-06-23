@@ -16,6 +16,7 @@ import '../../../mocks/cep_aberto.dart';
 import '../../../mocks/coupons_mock.dart';
 import '../../../mocks/orders_mock.dart';
 import '../../../mocks/products_mock.dart';
+import '../utils/order_set_up.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
@@ -34,6 +35,7 @@ void main() async {
   final orderCollection = connection.firestore.collection('orders');
   const endpoint = 'https://www.cepaberto.com/api/v3/cep?cep=';
   final headers = <String, dynamic>{'authorization': tokenCepStr};
+  final orderSetUp = OrderSetUp(connection);
 
   setUp(() {
     repositoryFactory = DatabaseRepositoryFactory(connection, storage: storage);
@@ -67,6 +69,7 @@ void main() async {
     httpDioMockAdapter.onGet(
         "${endpoint}88015600", (request) => request.reply(200, cepsAberto[1]),
         headers: headers);
+    await orderSetUp.sequences();
   });
 
   parameterizedTest(
@@ -244,12 +247,12 @@ void main() async {
         {"idProduct": productsSnap[0]['id'], "quantity": 1},
       ],
     };
+    await orderSetUp.sequences();
     final output = await checkout(input);
     final ordersData = await orderCollection.get();
     final orderData = ordersData.docs.last.data();
     expect(output['total'], equals(100));
-    expect(orderData['code'], equals("202300000008"));
-    // TODO: refactory this method
+    expect(orderData['code'], equals("202300000002"));
   });
 
   test("Não deve criar um pedido se o produto estiver com dimensão inválida",

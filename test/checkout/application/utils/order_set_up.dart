@@ -41,4 +41,8 @@ class OrderSetUp {
     }
     return ordersSnap;
   }
+
+  Future<void> sequences() async {
+    await connection.firestore.doc('aux/orderSequence').set({'current': 2});
+  }
 }
