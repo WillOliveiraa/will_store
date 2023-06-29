@@ -13,6 +13,7 @@ const itemsCollection = 'itemsOrders';
 const auxOrderSequenceCollection = 'aux/orderSequence';
 const cartItemCollection = 'cartItem';
 const sectionsCollection = 'sections';
+const itemsCollectionSectionItemAtribute = 'items';
 
 // CIELO PAYMENT
 const functionNameAuthorize = 'authorizeCreditCard';

@@ -2,7 +2,7 @@ import '../enums/section_type.dart';
 import 'section_item.dart';
 
 class Section {
-  final String? id;
+  String? id;
   final String name;
   final SectionType sectionType;
   final List<SectionItem> items;

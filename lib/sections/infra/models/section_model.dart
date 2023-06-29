@@ -22,4 +22,18 @@ class SectionModel extends Section {
           .toList(),
     );
   }
+
+  List<Map<String, dynamic>> toListItems() {
+    return items.map((x) => (x as SectionItemModel).toMap()).toList();
+  }
+
+  Map<String, dynamic> toMapWithoutItems() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'sectionType': sectionType.index,
+      'items': [],
+      'position': position,
+    };
+  }
 }

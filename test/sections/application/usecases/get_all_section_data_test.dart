@@ -1,3 +1,4 @@
+import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:will_store/sections/application/usecases/get_all_section_data.dart';
 import 'package:will_store/sections/infra/repositories/section_data_repository_database.dart';
@@ -7,13 +8,14 @@ import '../utils/section_set_up.dart';
 
 void main() async {
   final connection = FakeFirebaseAdapter();
+  final storage = MockFirebaseStorage();
   late GetAllSectionData getAllSectionData;
   late SectionDataRepositoryDatabase repository;
   final sectionSetUp = SectionSetUp(connection);
   final List<Map<String, dynamic>> sectionsSnap = [];
 
   setUp(() {
-    repository = SectionDataRepositoryDatabase(connection);
+    repository = SectionDataRepositoryDatabase(connection, storage);
     getAllSectionData = GetAllSectionData(repository);
   });
 

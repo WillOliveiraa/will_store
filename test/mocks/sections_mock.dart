@@ -1,4 +1,4 @@
-final sectionsMock = [
+final List<Map<String, dynamic>> sectionsMock = [
   {
     "id": "1",
     "name": "Novidades da Semana",
