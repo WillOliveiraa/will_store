@@ -27,6 +27,16 @@ class SectionModel extends Section {
     return items.map((x) => (x as SectionItemModel).toMap()).toList();
   }
 
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'sectionType': sectionType.index,
+      'items': items.map((x) => (x as SectionItemModel).toMap()).toList(),
+      'position': position,
+    };
+  }
+
   Map<String, dynamic> toMapWithoutItems() {
     return <String, dynamic>{
       'id': id,

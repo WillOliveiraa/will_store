@@ -37,6 +37,15 @@ class SectionDataRepositoryDatabase implements SectionDataRepository {
     await _updateSectionImages(section);
   }
 
+  @override
+  Future<void> updateSectionData(Section section) async {
+    if (section.id != null) {
+      await _setUrlImages(section);
+      await _getFirestoreRef(section.id!)
+          .update((section as SectionModel).toMap());
+    }
+  }
+
   Future<void> _setUrlImages(Section section) async {
     for (int i = 0; i < section.items.length; i++) {
       final item = section.items[i];
