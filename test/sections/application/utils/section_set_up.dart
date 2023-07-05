@@ -11,9 +11,10 @@ class SectionSetUp {
     _sectionsCollection = connection.firestore.collection('sections');
   }
 
-  Future<List<Map<String, dynamic>>> sections() async {
+  Future<List<Map<String, dynamic>>> sections(
+      {List<Map<String, dynamic>>? sections}) async {
     final List<Map<String, dynamic>> sectionsSnap = [];
-    for (final item in sectionsMock) {
+    for (final item in sections ?? sectionsMock) {
       final sectionSnapshot = await _sectionsCollection.add(item);
       item['id'] = sectionSnapshot.id;
       sectionsSnap.add(item);

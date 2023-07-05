@@ -46,6 +46,11 @@ class SectionDataRepositoryDatabase implements SectionDataRepository {
     }
   }
 
+  @override
+  Future<void> removeSection(String sectionId) async {
+    await _getFirestoreRef(sectionId).delete();
+  }
+
   Future<void> _setUrlImages(Section section) async {
     for (int i = 0; i < section.items.length; i++) {
       final item = section.items[i];
@@ -97,6 +102,12 @@ class SectionDataRepositoryDatabase implements SectionDataRepository {
     } on FirebaseException catch (e) {
       throw ArgumentError(getErrorString(e.code));
     }
+  }
+
+  @override
+  Future<void> removeImageFromStorage(String urlImage) async {
+    final reference = _storage.refFromURL(urlImage);
+    await reference.delete();
   }
 
   Reference get _storageRef => _storage.ref().child('$sectionsCollection/');
