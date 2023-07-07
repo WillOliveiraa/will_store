@@ -7,6 +7,6 @@ class AuthorizePayment {
   AuthorizePayment(this._paymentGateway);
 
   Future<String> call(Payment payment) async {
-    return await _paymentGateway.autorizePayment(payment);
+    return await _paymentGateway.authorizePayment(payment);
   }
 }

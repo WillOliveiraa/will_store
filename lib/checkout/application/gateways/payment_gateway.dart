@@ -1,5 +1,6 @@
 import '../../domain/entities/payment.dart';
 
 abstract class PaymentGateway {
-  Future<String> autorizePayment(Payment payment);
+  Future<String> authorizePayment(Payment payment);
+  Future<bool> capturePayment(String paymentId);
 }

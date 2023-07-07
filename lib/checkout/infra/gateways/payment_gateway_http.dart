@@ -13,7 +13,7 @@ class PaymentGatewayHttp implements PaymentGateway {
   PaymentGatewayHttp(this.functions);
 
   @override
-  Future<String> autorizePayment(Payment payment) async {
+  Future<String> authorizePayment(Payment payment) async {
     // try {
     final paymentData = (payment as CieloPaymentModel).toMapToAuthorize();
     final callable = functions.httpsCallable(functionNameAuthorize);
@@ -29,5 +29,18 @@ class PaymentGatewayHttp implements PaymentGateway {
     // } catch (e) {
     //   throw ArgumentError(e);
     // }
+  }
+
+  @override
+  Future<bool> capturePayment(String paymentId) async {
+    final Map<String, String> captureData = {'payId': paymentId};
+    final callable = functions.httpsCallable(functionNameCapture);
+    final response = await callable.call(captureData);
+    final data = Map<String, dynamic>.from(response.data as LinkedHashMap);
+    if (!data['success']) {
+      final error = data['error']['message'];
+      throw ArgumentError(error);
+    }
+    return true;
   }
 }
